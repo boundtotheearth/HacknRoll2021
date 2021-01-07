@@ -15,10 +15,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: MapWidget(),
+      body: MapWidget(),
     );
   }
 }
