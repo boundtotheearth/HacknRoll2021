@@ -58,8 +58,7 @@ class _MapWidgetState extends State<MapWidget> {
 
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
-    Set<Marker> markers = carparkList.map((carpark) {
-      print(availableIcon);
+    return carparkList.map((carpark) {
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
@@ -71,12 +70,6 @@ class _MapWidgetState extends State<MapWidget> {
         onTap: () => widget.selectCallback(carpark),
       );
     }).toSet();
-
-    markers.add(Marker(
-      markerId: MarkerId(),
-      position: _locationHandler,
-    ))
-    return markers;
   }
 
   @override
@@ -86,7 +79,7 @@ class _MapWidgetState extends State<MapWidget> {
         builder: (BuildContext context, AsyncSnapshot<List<Carpark>> snapshot) {
       if(snapshot.hasData) {
         List<Carpark> data = snapshot.data;
-        print(data.length);
+        Set<Marker> markers = generateMarkers(data);
         return GoogleMap(
           onMapCreated: _onMapCreated,
           tiltGesturesEnabled: false,
@@ -94,7 +87,8 @@ class _MapWidgetState extends State<MapWidget> {
             target: _center,
             zoom: 11.0,
           ),
-          markers: generateMarkers(data),
+          markers: markers,
+          myLocationEnabled: true,
         );
       } else if(snapshot.hasError) {
         return Text(snapshot.error.toString());
