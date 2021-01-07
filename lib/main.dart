@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/ListScreen.dart';
 import 'package:hacknroll2021/Location.dart';
 import 'package:hacknroll2021/MapScreen.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
   WidgetsFlutterBinding.ensureInitialized();
   Location locator = new Location();
+  List<Carpark> lst = await locator.returnNearestCarparkList();
 }
 
 class MyApp extends StatelessWidget {
