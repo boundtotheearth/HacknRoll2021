@@ -90,7 +90,7 @@ class _MapWidgetState extends State<MapWidget> {
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         });
   }
