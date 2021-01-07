@@ -37,11 +37,17 @@ class _MapWidgetState extends State<MapWidget> {
     DataSource ds = new DataSource();
     _carparkList = ds.fetchData();
 
-//    BitmapDescriptor.fromAssetImage(
-//        ImageConfiguration(devicePixelRatio: 2.5),
-//        'assets/destination_map_marker.png').then((onValue) {
-//      availableIcon = onValue;
-//    });
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/GreenMarker.png').then((onValue) {
+      availableIcon = onValue;
+    });
+
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/RedMarker.png').then((onValue) {
+      notAvailableIcon = onValue;
+    });
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -59,7 +65,7 @@ class _MapWidgetState extends State<MapWidget> {
           title: carpark.development,
           snippet: carpark.availableLots.toString() + " Lots Available"
         ),
-        //icon: availableIcon,
+        icon: carpark.availableLots > 10 ? availableIcon : notAvailableIcon,
         onTap: () => widget.selectCallback(carpark),
       );
     }).toSet();

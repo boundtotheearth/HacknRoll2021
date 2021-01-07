@@ -39,7 +39,7 @@ class CarParkDetails extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: Text(
-              carpark.development,
+              carpark.development ?? "",
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 fontSize: 24.0,
@@ -50,7 +50,7 @@ class CarParkDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(carpark.agency,
+                Text(carpark.agency ?? "",
                     style: TextStyle(
                         fontWeight: FontWeight.w600, color: Colors.grey)),
                 SizedBox(
@@ -59,7 +59,7 @@ class CarParkDetails extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "${carpark.availableLots} free spots",
+                      "${carpark.availableLots ?? 0} free spots",
                       softWrap: true,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
