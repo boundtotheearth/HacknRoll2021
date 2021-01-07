@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/MapWidget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import './CarparkDetails.dart';
@@ -22,12 +23,27 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  PanelController _pc = PanelController();
+  PanelController _pc;
+  Carpark _selectedCarpark;
+
+  void selectCarpark(Carpark carpark) {
+    setState(() {
+      _selectedCarpark = carpark;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pc = PanelController();
+    //_pc.hide();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SlidingUpPanel(
-        body: MapWidget(),
+        body: MapWidget(selectCallback: selectCarpark,),
         controller: _pc,
         isDraggable: false,
         panelBuilder: (sc) => _panel(sc),
@@ -40,7 +56,7 @@ class _MapScreenState extends State<MapScreen> {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: CarParkDetails(sc, null),
+      child: CarParkDetails(sc, _selectedCarpark),
     );
   }
 }
