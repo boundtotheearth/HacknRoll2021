@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hacknroll2021/ListScreen.dart';
+import 'package:hacknroll2021/Location.dart';
 import 'package:hacknroll2021/MapScreen.dart';
 
 void main() {
   runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  Location locator = new Location();
 }
 
 class MyApp extends StatelessWidget {
