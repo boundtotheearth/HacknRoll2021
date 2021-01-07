@@ -59,6 +59,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
     Set<Marker> markers = carparkList.map((carpark) {
+      print(availableIcon);
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
@@ -70,7 +71,7 @@ class _MapWidgetState extends State<MapWidget> {
         onTap: () => widget.selectCallback(carpark),
       );
     }).toSet();
-    
+
     markers.add(Marker(
       markerId: MarkerId(),
       position: _locationHandler,

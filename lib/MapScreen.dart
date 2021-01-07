@@ -29,14 +29,15 @@ class _MapScreenState extends State<MapScreen> {
   void selectCarpark(Carpark carpark) {
     setState(() {
       _selectedCarpark = carpark;
+      _pc.show();
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _pc = PanelController();
-    //_pc.hide();
+    _pc = new PanelController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _pc.hide());
   }
 
   @override
