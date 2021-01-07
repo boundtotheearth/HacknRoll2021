@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,8 +22,9 @@ class _MapWidgetState extends State<MapWidget> {
   final LatLng _center = const LatLng(1.3521, 103.8198);
 
   String _mapStyle;
-  BitmapDescriptor availableIcon;
-  BitmapDescriptor notAvailableIcon;
+  BitmapDescriptor _availableIcon;
+  BitmapDescriptor _notAvailableIcon;
+  Location _locationHandler;
 
   @override
   void initState() {
@@ -37,19 +35,19 @@ class _MapWidgetState extends State<MapWidget> {
 
 //    DataSource ds = new DataSource();
 //    _carparkList = ds.fetchData();
-    Location locationHandler = new Location();
-    _carparkList = locationHandler.returnNearestCarparkList();
+    _locationHandler = new Location();
+    _carparkList = _locationHandler.returnNearestCarparkList();
 
     BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
         'assets/GreenMarker.png').then((onValue) {
-      availableIcon = onValue;
+      _availableIcon = onValue;
     });
 
     BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
         'assets/RedMarker.png').then((onValue) {
-      notAvailableIcon = onValue;
+      _notAvailableIcon = onValue;
     });
   }
 
@@ -60,7 +58,7 @@ class _MapWidgetState extends State<MapWidget> {
 
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
-    return carparkList.map((carpark) {
+    Set<Marker> markers = carparkList.map((carpark) {
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
@@ -68,10 +66,16 @@ class _MapWidgetState extends State<MapWidget> {
           title: carpark.development,
           snippet: carpark.availableLots.toString() + " Lots Available"
         ),
-        icon: carpark.availableLots > 10 ? availableIcon : notAvailableIcon,
+        icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
         onTap: () => widget.selectCallback(carpark),
       );
     }).toSet();
+    
+    markers.add(Marker(
+      markerId: MarkerId(),
+      position: _locationHandler,
+    ))
+    return markers;
   }
 
   @override
