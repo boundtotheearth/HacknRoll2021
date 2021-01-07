@@ -6,7 +6,6 @@ import 'package:hacknroll2021/MapScreen.dart';
 
 void main() async {
   runApp(MyApp());
-  WidgetsFlutterBinding.ensureInitialized();
   Location locator = new Location();
   List<Carpark> lst = await locator.returnNearestCarparkList();
 }

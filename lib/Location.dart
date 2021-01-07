@@ -37,6 +37,7 @@ class Location {
   }
 
   Future<List<Carpark>> returnNearestCarparkList() async {
+    double distanceQuota = 500.0;
     DataSource dataSource = new DataSource();
     List<Carpark> carparkList = await dataSource.fetchData();
     List<Carpark> nearestCarparkList = new List<Carpark>();
@@ -47,10 +48,16 @@ class Location {
     for (int i = 0; i < carparkList.length; i++) {
       Carpark carpark = carparkList.elementAt(i);
       var carparkPosition = new LatLng(carpark.location.latitude, carpark.location.longitude);
-      if (distance.as(LengthUnit.Meter, currentPosition, carparkPosition) < 1000.0) {
+      if (distance.as(LengthUnit.Meter, currentPosition, carparkPosition) < distanceQuota) {
         nearestCarparkList.add(carpark);
       }
     }
     return nearestCarparkList;
+  }
+
+  Future<LatLng> returnCurrentPosition() async {
+    Position position = await _determinePosition();
+    LatLng currentPosition = new LatLng(position.latitude, position.longitude);
+    return currentPosition;
   }
 }
