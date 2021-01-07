@@ -37,11 +37,11 @@ class _MapWidgetState extends State<MapWidget> {
     DataSource ds = new DataSource();
     _carparkList = ds.fetchData();
 
-//    BitmapDescriptor.fromAssetImage(
-//        ImageConfiguration(devicePixelRatio: 2.5),
-//        'assets/destination_map_marker.png').then((onValue) {
-//      availableIcon = onValue;
-//    });
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/destination_map_marker.png').then((onValue) {
+      availableIcon = onValue;
+    });
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -52,6 +52,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
     return carparkList.map((carpark) {
+      print(availableIcon);
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
