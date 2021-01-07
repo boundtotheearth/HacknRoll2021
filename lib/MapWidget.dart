@@ -39,15 +39,15 @@ class _MapWidgetState extends State<MapWidget> {
     _carparkList = _locationHandler.returnNearestCarparkList();
 
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/GreenMarker.png').then((onValue) {
+            ImageConfiguration(devicePixelRatio: 2.5), 'assets/GreenMarker.png')
+        .then((onValue) {
       _availableIcon = onValue;
     });
 
-    BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/RedMarker.png').then((onValue) {
-      _notAvailableIcon = onValue;
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5),
+            'assets/destination_map_marker.png')
+        .then((onValue) {
+      availableIcon = onValue;
     });
   }
 
@@ -56,17 +56,15 @@ class _MapWidgetState extends State<MapWidget> {
     mapController.setMapStyle(_mapStyle);
   }
 
-
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
     return carparkList.map((carpark) {
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
         infoWindow: InfoWindow(
-          title: carpark.development,
-          snippet: carpark.availableLots.toString() + " Lots Available"
-        ),
-        icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
+            title: carpark.development,
+            snippet: carpark.availableLots.toString() + " Lots Available"),
+        //icon: availableIcon,
         onTap: () => widget.selectCallback(carpark),
       );
     }).toSet();
@@ -77,24 +75,23 @@ class _MapWidgetState extends State<MapWidget> {
     return FutureBuilder<List<Carpark>>(
         future: _carparkList,
         builder: (BuildContext context, AsyncSnapshot<List<Carpark>> snapshot) {
-      if(snapshot.hasData) {
-        List<Carpark> data = snapshot.data;
-        Set<Marker> markers = generateMarkers(data);
-        return GoogleMap(
-          onMapCreated: _onMapCreated,
-          tiltGesturesEnabled: false,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
-          ),
-          markers: markers,
-          myLocationEnabled: true,
-        );
-      } else if(snapshot.hasError) {
-        return Text(snapshot.error.toString());
-      } else {
-        return CircularProgressIndicator();
-      }
-    });
+          if (snapshot.hasData) {
+            List<Carpark> data = snapshot.data;
+            print(data.length);
+            return GoogleMap(
+              onMapCreated: _onMapCreated,
+              tiltGesturesEnabled: false,
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 11.0,
+              ),
+              markers: generateMarkers(data),
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
   }
 }
