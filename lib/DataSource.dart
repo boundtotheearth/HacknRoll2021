@@ -30,7 +30,6 @@ class DataSource {
         rawList.forEach((element) {
           carparkList.add(Carpark.fromJson(element));
         });
-        print(rawList);
 
         if(rawList.length < 500) {
           stop = true;
@@ -39,7 +38,6 @@ class DataSource {
         throw Exception("Failed to load data");
       }
       skip += 500;
-      print(finalURL);
     } while (!stop);
 
     return carparkList;
