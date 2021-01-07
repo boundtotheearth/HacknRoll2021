@@ -12,7 +12,6 @@ class Location {
     bool serviceEnabled;
     LocationPermission permission;
 
-
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
@@ -47,8 +46,10 @@ class Location {
     var distance = new Distance();
     for (int i = 0; i < carparkList.length; i++) {
       Carpark carpark = carparkList.elementAt(i);
-      var carparkPosition = new LatLng(carpark.location.latitude, carpark.location.longitude);
-      if (distance.as(LengthUnit.Meter, currentPosition, carparkPosition) < distanceQuota) {
+      var carparkPosition =
+          new LatLng(carpark.location.latitude, carpark.location.longitude);
+      if (distance.as(LengthUnit.Meter, currentPosition, carparkPosition) <
+          distanceQuota) {
         nearestCarparkList.add(carpark);
       }
     }

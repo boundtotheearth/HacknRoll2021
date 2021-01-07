@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:hacknroll2021/Carpark.dart';
-import 'package:hacknroll2021/DataSource.dart';
 import 'package:hacknroll2021/Location.dart';
 
 class MapWidget extends StatefulWidget {
@@ -19,7 +18,7 @@ class _MapWidgetState extends State<MapWidget> {
   GoogleMapController mapController;
   Future<List<Carpark>> _carparkList;
 
-  final LatLng _center = const LatLng(1.3521, 103.8198);
+  final LatLng _center = const LatLng(1.2966, 103.7764);
 
   String _mapStyle;
   BitmapDescriptor _availableIcon;
@@ -44,10 +43,10 @@ class _MapWidgetState extends State<MapWidget> {
       _availableIcon = onValue;
     });
 
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5),
-            'assets/destination_map_marker.png')
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(devicePixelRatio: 2.5), 'assets/RedMarker.png')
         .then((onValue) {
-      availableIcon = onValue;
+      _notAvailableIcon = onValue;
     });
   }
 
@@ -64,7 +63,7 @@ class _MapWidgetState extends State<MapWidget> {
         infoWindow: InfoWindow(
             title: carpark.development,
             snippet: carpark.availableLots.toString() + " Lots Available"),
-        //icon: availableIcon,
+        icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
         onTap: () => widget.selectCallback(carpark),
       );
     }).toSet();
@@ -77,7 +76,7 @@ class _MapWidgetState extends State<MapWidget> {
         builder: (BuildContext context, AsyncSnapshot<List<Carpark>> snapshot) {
           if (snapshot.hasData) {
             List<Carpark> data = snapshot.data;
-            print(data.length);
+            Set<Marker> markers = generateMarkers(data);
             return GoogleMap(
               onMapCreated: _onMapCreated,
               tiltGesturesEnabled: false,
@@ -85,7 +84,8 @@ class _MapWidgetState extends State<MapWidget> {
                 target: _center,
                 zoom: 11.0,
               ),
-              markers: generateMarkers(data),
+              markers: markers,
+              myLocationEnabled: true,
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
