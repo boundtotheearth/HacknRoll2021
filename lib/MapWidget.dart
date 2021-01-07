@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/DataSource.dart';
+import 'package:hacknroll2021/Location.dart';
 
 class MapWidget extends StatefulWidget {
   Function(Carpark) selectCallback;
@@ -34,8 +35,10 @@ class _MapWidgetState extends State<MapWidget> {
       _mapStyle = string;
     });
 
-    DataSource ds = new DataSource();
-    _carparkList = ds.fetchData();
+//    DataSource ds = new DataSource();
+//    _carparkList = ds.fetchData();
+    Location locationHandler = new Location();
+    _carparkList = locationHandler.returnNearestCarparkList();
 
     BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
