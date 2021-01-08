@@ -24,10 +24,11 @@ class ModelLoader {
 
   Future _loadFeatures() async {
     final myData = await rootBundle.loadString(_featuresFile);
-    List<List<dynamic>> features = const CsvToListConverter().convert(myData, eol: '\r\n');
+    List<List<dynamic>> features =
+        const CsvToListConverter().convert(myData, eol: '\n');
     features.removeAt(0);
     final Map<String, int> ref = {};
-    for (var i=0; i<features.length; i++) {
+    for (var i = 0; i < features.length; i++) {
       ref[features[i][1]] = features[i][0];
     }
     _ref = ref;
@@ -39,9 +40,16 @@ class ModelLoader {
     return _ref[id];
   }
 
-  double predict(String id, var day, var hour) {
-    int a = convertCarParkId(id);
+  int predict(String id, DateTime dt) {
+    double day = (dt.weekday - 1).toDouble();
+    double hour = dt.hour.toDouble();
+    int out = _predictData(id, day, hour).toInt();
+    return out;
+  }
 
+  double _predictData(String id, double day, double hour) {
+    int a = convertCarParkId(id);
+    if (a == null) return -1;
     List<double> i = List<double>.filled(_ref.length, 0);
     i[0] = day;
     i[1] = hour;
