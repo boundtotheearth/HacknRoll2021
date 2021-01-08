@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hacknroll2021/GoogleMapsButton.dart';
 import './Carpark.dart';
 
 class CarParkDetails extends StatelessWidget {
@@ -88,21 +89,22 @@ class CarParkDetails extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          FlatButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                side: BorderSide(color: Colors.blueAccent)),
-            color: Colors.blueAccent,
-            textColor: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            onPressed: () {},
-            child: Text(
-              "Bring me there",
-              style: TextStyle(
-                fontSize: 28.0,
-              ),
-            ),
-          ),
+//          FlatButton(
+//            shape: RoundedRectangleBorder(
+//                borderRadius: BorderRadius.circular(8.0),
+//                side: BorderSide(color: Colors.blueAccent)),
+//            color: Colors.blueAccent,
+//            textColor: Colors.white,
+//            padding: EdgeInsets.symmetric(vertical: 8.0),
+//            onPressed: () {},
+//            child: Text(
+//              "Bring me there",
+//              style: TextStyle(
+//                fontSize: 28.0,
+//              ),
+//            ),
+//          ),
+          GoogleMapsButton(null, carpark.location),
         ],
       ),
     );

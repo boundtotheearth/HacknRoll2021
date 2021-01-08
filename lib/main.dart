@@ -3,12 +3,15 @@ import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/ListScreen.dart';
 import 'package:hacknroll2021/Location.dart';
 import 'package:hacknroll2021/MapScreen.dart';
+import 'package:hacknroll2021/ModelLoader.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   await FlutterConfig.loadEnvVariables();
+
   runApp(MyApp());
   LocationService locator = new LocationService();
   List<Carpark> lst = await locator.returnNearestCarparkList();

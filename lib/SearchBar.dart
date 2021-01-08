@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './Place.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -19,11 +20,36 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
   List<Place> places = [];
 
   Future<List<Place>> fetchData(String query) async {
+<<<<<<< HEAD
     final places =
         new GoogleMapsPlaces(apiKey: FlutterConfig.get('MAPS_API_KEY'));
     PlacesSearchResponse response = await places.searchByText(query);
     List<Place> placeList =
         response.results.map((res) => Place(res.name, res.placeId)).toList();
+=======
+    int skip = 0;
+    bool stop = false;
+    List<Place> placeList = [];
+
+    String finalURL =
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?components=country:sg&input=${query}&key=${headers['MapKey']}';
+    http.Response response = await http.get(finalURL, headers: headers);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      List<dynamic> rawList = data['predictions'];
+      rawList.forEach((element) {
+        placeList.add(Place(element['description'], element['place_id']));
+      });
+
+      if (rawList.length < 500) {
+        stop = true;
+      }
+    } else {
+      throw Exception("Failed to load data");
+    }
+
+>>>>>>> f6fe9c9646b9e92784a65046ddaeb57e25e500ed
     return placeList;
   }
 
@@ -70,14 +96,28 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
             color: Colors.white,
             elevation: 4.0,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: places.map((place) {
+<<<<<<< HEAD
                 return GestureDetector(
                   child: Container(
                     height: 112,
                     child: Text(place.description),
                   ),
                   onTap: () => widget.updateSearchLocationCallBack(place),
+=======
+                return Container(
+                  height: 30,
+                  child: Text(
+                    place.description,
+                    softWrap: false,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )
+                  )
+>>>>>>> f6fe9c9646b9e92784a65046ddaeb57e25e500ed
                 );
               }).toList(),
             ),
