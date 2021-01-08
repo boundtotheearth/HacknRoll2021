@@ -68,7 +68,7 @@ class _MapScreenState extends State<MapScreen> {
               key: mapWidgetKey,
             ),
             controller: _pc,
-            isDraggable: false,
+            isDraggable: true,
             panelBuilder: (sc) => _panel(sc),
             minHeight: 225,
             borderRadius: radius,

@@ -41,7 +41,8 @@ class HDBCarParkDetails extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: FittedBox(
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.contain,
+              alignment: Alignment.centerLeft,
               child: Text(
                 carpark.development ?? "",
                 style: TextStyle(
