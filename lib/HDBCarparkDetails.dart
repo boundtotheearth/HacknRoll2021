@@ -77,7 +77,7 @@ class HDBCarParkDetails extends StatelessWidget {
                               fontWeight: FontWeight.w600, color: Colors.grey),
                         ),
                         Text(
-                          "SHORT-TERM PARKING: ${carpark.shortTermParking}",
+                          "SHORT-TERM: ${carpark.shortTermParking}",
                           style: TextStyle(
                               fontWeight: FontWeight.w600, color: Colors.grey),
                         ),
