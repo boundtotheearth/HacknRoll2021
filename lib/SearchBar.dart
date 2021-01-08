@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './Place.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -36,7 +37,6 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
       if (rawList.length < 500) {
         stop = true;
       }
-      print(response.body);
     } else {
       throw Exception("Failed to load data");
     }
@@ -64,9 +64,6 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
         setState(() {
           places = buildList;
         });
-        // for (int i = 0; i < buildList.length; i++) {
-        //   print(buildList.elementAt(i).description);
-        // }
       },
       // Specify a custom transition to be used for
       // animating between opened and closed stated.
@@ -90,9 +87,20 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
             color: Colors.white,
             elevation: 4.0,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: places.map((place) {
-                return Container(height: 112, child: Text(place.description));
+                return Container(
+                  height: 30,
+                  child: Text(
+                    place.description,
+                    softWrap: false,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )
+                  )
+                );
               }).toList(),
             ),
           ),
