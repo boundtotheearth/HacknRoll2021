@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hacknroll2021/AvailableLots.dart';
 import 'package:hacknroll2021/GoogleMapsButton.dart';
 import 'package:hacknroll2021/HDBCarpark.dart';
 
@@ -84,21 +85,7 @@ class HDBCarParkDetails extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          "AVAILABLE LOTS" ?? "",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                        ),
-                        Text(
-                          "${carpark.availableLots ?? 0}",
-                          softWrap: true,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 40),
-                        ),
-                      ],
-                    )
+                    AvailableLots(carpark: carpark)
                   ],
                 ),
                 Text(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/ListScreen.dart';
-import 'package:hacknroll2021/Location.dart';
+import 'package:hacknroll2021/LocationService.dart';
 import 'package:hacknroll2021/MapScreen.dart';
 import 'package:hacknroll2021/ModelLoader.dart';
 import 'package:flutter_config/flutter_config.dart';
