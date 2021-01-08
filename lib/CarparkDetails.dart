@@ -41,41 +41,75 @@ class CarParkDetails extends StatelessWidget {
             child: Text(
               carpark.development ?? "",
               style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                fontSize: 21.0,
               ),
             ),
           ),
           Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(carpark.agency ?? "",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.grey)),
                 SizedBox(
-                  height: 12.0,
+                  height: 7,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${carpark.availableLots ?? 0} free spots",
-                      softWrap: true,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "ELECTRONIC: YES" ?? "",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          "MULTI-STORY: YES" ?? "",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          "NIGHT PARKING: YES" ?? "",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          "SHORT-TERM: 7AM-10.30PM" ?? "",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("\$2.40/hr",
-                        softWrap: true,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Column(
+                      children: [
+                        Text(
+                          "AVAILABLE LOTS" ?? "",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                        Text(
+                          "${carpark.availableLots ?? 0}",
+                          softWrap: true,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 40),
+                        ),
+                      ],
+                    )
                   ],
+                ),
+                Text(
+                  "FREE PARKING: SUN & PH FR 7AM-10.30PM" ?? "",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: Colors.grey),
                 ),
               ],
             ),
           ),
           SizedBox(
-            height: 24,
+            height: 10,
           ),
           FlatButton(
             shape: RoundedRectangleBorder(

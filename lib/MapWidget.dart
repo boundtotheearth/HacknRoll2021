@@ -75,9 +75,9 @@ class _MapWidgetState extends State<MapWidget> {
           if (snapshot.hasData) {
             List<Carpark> data = snapshot.data;
             Set<Marker> markers = generateMarkers(data);
-//            LatLng currentPosition = LatLng(_locationHandler.currentPosition.latitude,
-//                _locationHandler.currentPosition.longitude);
-            LatLng currentPosition = LatLng(1.3752598653584067, 103.95690821866181);
+            LatLng currentPosition = LatLng(
+                _locationHandler.currentPosition.latitude,
+                _locationHandler.currentPosition.longitude);
             return GoogleMap(
               onMapCreated: _onMapCreated,
               tiltGesturesEnabled: false,
