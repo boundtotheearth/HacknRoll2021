@@ -66,7 +66,7 @@ class _MapScreenState extends State<MapScreen> {
             minHeight: 225,
             borderRadius: radius,
           ),
-          buildFloatingSearchBar(context),
+          SearchBarWrapper(),
         ],
       ),
     );
@@ -81,9 +81,9 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Widget buildPanel(ScrollController sc) {
-    if(_selectedCarpark is HDBCarpark) {
+    if (_selectedCarpark is HDBCarpark) {
       return HDBCarParkDetails(sc, _selectedCarpark.withPrice());
-    } else if(_selectedCarpark is MallCarpark) {
+    } else if (_selectedCarpark is MallCarpark) {
       return MallCarParkDetails(sc, _selectedCarpark.withPrice());
     } else {
       return CarParkDetails(sc, _selectedCarpark);
