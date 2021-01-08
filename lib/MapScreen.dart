@@ -83,7 +83,6 @@ class _MapScreenState extends State<MapScreen> {
             ),
             onWillPop: () {
               if(_pc.isPanelShown) {
-                print("Popop");
                 _pc.hide();
                 return Future.value(false);
               } else {
