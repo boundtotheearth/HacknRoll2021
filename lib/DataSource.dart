@@ -78,15 +78,15 @@ class DataSource {
         List<dynamic> rawList = data['value'];
         rawList.forEach((element) {
           Carpark carpark = Carpark.fromJson(element);
-//          if(hdbInfo.containsKey(carpark.carparkId)) {
-//            Map<String, String> priceInfo = hdbInfo[carpark.carparkId];
-//            carpark = HDBCarpark.fromJson(carpark, priceInfo);
-//          }
-//
-//          if(mallInfo.containsKey(carpark.development)) {
-//            Map<String, String> priceInfo = mallInfo[carpark.development];
-//            carpark = MallCarpark.fromJson(carpark, priceInfo);
-//          }
+          if(hdbInfo.containsKey(carpark.carparkId)) {
+            Map<String, String> priceInfo = hdbInfo[carpark.carparkId];
+            carpark = HDBCarpark.fromJson(carpark, priceInfo);
+          }
+
+          if(mallInfo.containsKey(carpark.development)) {
+            Map<String, String> priceInfo = mallInfo[carpark.development];
+            carpark = MallCarpark.fromJson(carpark, priceInfo);
+          }
 
           //TODO: Improve Mall Carparks
 
