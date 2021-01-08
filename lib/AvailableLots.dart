@@ -17,8 +17,8 @@ class AvailableLots extends StatefulWidget {
   String _getPrediction() {
     String id = carpark.carparkId;
     DateTime dt = DateTime.now();
-    String pred = modelLoader.predict(id, dt).toString();
-    return pred;
+    int pred = modelLoader.predict(id, dt);
+    return pred < 0 ? "-" : pred.toString();
   }
 }
 
@@ -59,7 +59,6 @@ class _AvailableLotsState extends State<AvailableLots> {
       onTap: () {
         setState(() {
           _isAvailableLots = !_isAvailableLots;
-          print(_isAvailableLots);
         });
       },
     );
