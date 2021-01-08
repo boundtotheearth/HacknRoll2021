@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hacknroll2021/Carpark.dart';
+import 'package:hacknroll2021/HDBCarparkDetails.dart';
+import 'package:hacknroll2021/MallCarparkDetails.dart';
+import 'package:hacknroll2021/HDBCarpark.dart';
+import 'package:hacknroll2021/MallCarpark.dart';
 import 'package:hacknroll2021/MapWidget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import './CarparkDetails.dart';
@@ -72,7 +76,17 @@ class _MapScreenState extends State<MapScreen> {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: CarParkDetails(sc, _selectedCarpark),
+      child: buildPanel(sc),
     );
+  }
+
+  Widget buildPanel(ScrollController sc) {
+    if(_selectedCarpark is HDBCarpark) {
+      return HDBCarParkDetails(sc, _selectedCarpark.withPrice());
+    } else if(_selectedCarpark is MallCarpark) {
+      return MallCarParkDetails(sc, _selectedCarpark.withPrice());
+    } else {
+      return CarParkDetails(sc, _selectedCarpark);
+    }
   }
 }

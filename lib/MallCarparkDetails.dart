@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import './Carpark.dart';
+import 'package:hacknroll2021/MallCarpark.dart';
 
-class CarParkDetails extends StatelessWidget {
+class MallCarParkDetails extends StatelessWidget {
   // const CarParkDetails({
   //   Key key,
   // }) : super(key: key);
 
   ScrollController _sc;
-  Carpark carpark;
+  MallCarpark carpark;
 
-  CarParkDetails(this._sc, this.carpark);
+  MallCarParkDetails(this._sc, this.carpark);
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +58,45 @@ class CarParkDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Text(
-                        "No Details Available",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, color: Colors.grey),
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "WEEKDAY:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.grey),
+                        ),
+                        Text(
+                          carpark.weekday1,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          carpark.weekday2,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          "SATURDAY:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.grey),
+                        ),
+                        Text(
+                          carpark.sat,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          "SUNDAY & PH:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.grey),
+                        ),
+                        Text(
+                          carpark.sunPH,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                      ],
                     ),
                     Column(
                       children: [

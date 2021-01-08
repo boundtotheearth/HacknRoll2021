@@ -58,9 +58,9 @@ class _MapWidgetState extends State<MapWidget> {
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
-        infoWindow: InfoWindow(
-            title: carpark.development,
-            snippet: carpark.availableLots.toString() + " Lots Available"),
+//        infoWindow: InfoWindow(
+//            title: carpark.development,
+//            snippet: carpark.availableLots.toString() + " Lots Available"),
         icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
         onTap: () => widget.selectCallback(carpark),
       );

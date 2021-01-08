@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/HDBCarpark.dart';
+import 'package:hacknroll2021/MallCarpark.dart';
 import 'package:http/http.dart' as http;
 import 'package:csv/csv.dart';
 import 'package:flutter_config/flutter_config.dart';
@@ -77,12 +78,17 @@ class DataSource {
         List<dynamic> rawList = data['value'];
         rawList.forEach((element) {
           Carpark carpark = Carpark.fromJson(element);
-          if(hdbInfo.containsKey(carpark.carparkId)) {
-            Map<String, String> priceInfo = hdbInfo[carpark.carparkId];
-            carpark = HDBCarpark.fromJson(carpark, priceInfo);
-          }
+//          if(hdbInfo.containsKey(carpark.carparkId)) {
+//            Map<String, String> priceInfo = hdbInfo[carpark.carparkId];
+//            carpark = HDBCarpark.fromJson(carpark, priceInfo);
+//          }
+//
+//          if(mallInfo.containsKey(carpark.development)) {
+//            Map<String, String> priceInfo = mallInfo[carpark.development];
+//            carpark = MallCarpark.fromJson(carpark, priceInfo);
+//          }
 
-          //TODO: Mall Carparks
+          //TODO: Improve Mall Carparks
 
           carparkList.add(carpark);
         });

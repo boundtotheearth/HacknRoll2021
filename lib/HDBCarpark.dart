@@ -18,7 +18,7 @@ class HDBCarpark extends Carpark {
       system: json['type_of_parking_system'],
       shortTermParking: json['short_term_parking'],
       freeParking: json['free_parking'],
-      nightParking: json['nightParking'],
+      nightParking: json['night_parking'],
     );
   }
 
