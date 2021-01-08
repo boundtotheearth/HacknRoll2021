@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hacknroll2021/GoogleMapsButton.dart';
 import './Carpark.dart';
 import 'package:hacknroll2021/AvailableLots.dart';
+import 'ModelLoader.dart';
 
 class CarParkDetails extends StatelessWidget {
   // const CarParkDetails({
@@ -10,8 +11,9 @@ class CarParkDetails extends StatelessWidget {
 
   ScrollController _sc;
   Carpark carpark;
+  ModelLoader _modelLoader;
 
-  CarParkDetails(this._sc, this.carpark);
+  CarParkDetails(this._sc, this.carpark, this._modelLoader);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class CarParkDetails extends StatelessWidget {
                             fontWeight: FontWeight.w600, color: Colors.grey),
                       ),
                     ),
-                    AvailableLots(carpark: carpark),
+                    AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
                   ],
                 ),
               ],

@@ -2,7 +2,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-class Model {
+class ModelLoader {
   final _modelFile = 'model.tflite';
   final _featuresFile = 'assets/features.csv';
 
@@ -10,7 +10,7 @@ class Model {
 
   Interpreter _interpreter;
 
-  Model();
+  ModelLoader();
 
   Future init() async {
     return Future.wait([_loadModel(), _loadFeatures()]);

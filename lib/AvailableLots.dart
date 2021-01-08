@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Carpark.dart';
+import 'ModelLoader.dart';
 
 class AvailableLots extends StatefulWidget {
   @override
@@ -7,9 +8,11 @@ class AvailableLots extends StatefulWidget {
   const AvailableLots({
     Key key,
     @required this.carpark,
+    @required this.modelLoader,
   }) : super(key: key);
 
   final Carpark carpark;
+  final ModelLoader modelLoader;
 }
 
 class _AvailableLotsState extends State<AvailableLots> {

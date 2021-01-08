@@ -10,6 +10,7 @@ import 'package:hacknroll2021/Place.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import './CarparkDetails.dart';
 import './SearchBar.dart';
+import 'ModelLoader.dart';
 
 /*
     to programatically open/close bottom sheet, use:
@@ -32,7 +33,7 @@ class _MapScreenState extends State<MapScreen> {
   PanelController _pc;
   Carpark _selectedCarpark;
   GlobalKey<MapWidgetState> mapWidgetKey = GlobalKey();
-
+  ModelLoader _modelLoader;
   void selectCarpark(Carpark carpark) {
     setState(() {
       _selectedCarpark = carpark;
@@ -45,6 +46,8 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     _pc = new PanelController();
     WidgetsBinding.instance.addPostFrameCallback((_) => _pc.hide());
+    _modelLoader = ModelLoader();
+    _modelLoader.init();
   }
 
   @override
@@ -91,11 +94,11 @@ class _MapScreenState extends State<MapScreen> {
 
   Widget buildPanel(ScrollController sc) {
     if (_selectedCarpark is HDBCarpark) {
-      return HDBCarParkDetails(sc, _selectedCarpark.withPrice());
+      return HDBCarParkDetails(sc, _selectedCarpark.withPrice(), _modelLoader);
     } else if (_selectedCarpark is MallCarpark) {
-      return MallCarParkDetails(sc, _selectedCarpark.withPrice());
+      return MallCarParkDetails(sc, _selectedCarpark.withPrice(), _modelLoader);
     } else {
-      return CarParkDetails(sc, _selectedCarpark);
+      return CarParkDetails(sc, _selectedCarpark, _modelLoader);
     }
   }
 }
