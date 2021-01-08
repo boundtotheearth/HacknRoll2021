@@ -6,7 +6,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import './CarparkDetails.dart';
 import './SearchBar.dart';
 
-
 /*
     to programatically open/close bottom sheet, use:
       _pc.open()
@@ -44,16 +43,24 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
           SlidingUpPanel(
-            body: MapWidget(selectCallback: selectCarpark,),
+            body: MapWidget(
+              selectCallback: selectCarpark,
+            ),
             controller: _pc,
             isDraggable: false,
             panelBuilder: (sc) => _panel(sc),
             minHeight: 225,
+            borderRadius: radius,
           ),
           buildFloatingSearchBar(context),
         ],
