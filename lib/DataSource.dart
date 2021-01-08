@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:hacknroll2021/Carpark.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_config/flutter_config.dart';
 
 class DataSource {
   final String sourceURL =
       'http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2';
 
   final Map<String, String> headers = {
-    'AccountKey' : 'YJnS3P+qRAyxvHFOPwvtpA=='
+    'AccountKey': FlutterConfig.get('ACCOUNT_KEY')
   };
 
   Future<http.Response> fetchDataRaw() {
@@ -31,7 +32,7 @@ class DataSource {
           carparkList.add(Carpark.fromJson(element));
         });
 
-        if(rawList.length < 500) {
+        if (rawList.length < 500) {
           stop = true;
         }
       } else {

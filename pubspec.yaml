@@ -28,6 +28,7 @@ dependencies:
   geolocator: ^6.1.13
   latlong: ^0.6.1
   sliding_up_panel: ^1.0.2
+  flutter_config: ^1.0.8
 
 
   # The following adds the Cupertino Icons font to your application.
