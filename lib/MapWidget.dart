@@ -7,7 +7,7 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:hacknroll2021/Carpark.dart';
-import 'package:hacknroll2021/Location.dart';
+import 'package:hacknroll2021/LocationService.dart';
 import './Place.dart';
 import "package:google_maps_webservice/places.dart";
 
