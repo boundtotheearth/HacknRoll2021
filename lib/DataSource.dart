@@ -41,6 +41,7 @@ class DataSource {
       skip += 500;
     } while (!stop);
 
-    return carparkList;
+    return carparkList.toSet().toList(); //remove duplicates
+    //return carparkList;
   }
 }

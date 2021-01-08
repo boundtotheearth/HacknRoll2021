@@ -50,7 +50,7 @@ class _CarparkListState extends State<CarparkList> {
   Widget _buildRow(Carpark carpark) {
     return ListTile(
       title: Text(
-        carpark.location.latitude.toString(),
+        carpark.carparkId + " " + carpark.development,
         style: _biggerFont,
       ),
     );

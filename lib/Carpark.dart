@@ -27,4 +27,7 @@ class Carpark {
       agency: json['Agency'],
     );
   }
+
+  bool operator ==(o) => o is Carpark && carparkId == o.carparkId;
+  int get hashCode => carparkId.hashCode;
 }

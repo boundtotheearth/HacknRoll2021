@@ -18,8 +18,6 @@ class _MapWidgetState extends State<MapWidget> {
   GoogleMapController mapController;
   Future<List<Carpark>> _carparkList;
 
-  final LatLng _center = const LatLng(1.2966, 103.7764);
-
   String _mapStyle;
   BitmapDescriptor _availableIcon;
   BitmapDescriptor _notAvailableIcon;
@@ -38,13 +36,13 @@ class _MapWidgetState extends State<MapWidget> {
     _carparkList = _locationHandler.returnNearestCarparkList();
 
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(devicePixelRatio: 2.5), 'assets/GreenMarker.png')
+            ImageConfiguration(), 'assets/GreenMarker.png')
         .then((onValue) {
       _availableIcon = onValue;
     });
 
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(devicePixelRatio: 2.5), 'assets/RedMarker.png')
+            ImageConfiguration(), 'assets/RedMarker.png')
         .then((onValue) {
       _notAvailableIcon = onValue;
     });
@@ -77,18 +75,21 @@ class _MapWidgetState extends State<MapWidget> {
           if (snapshot.hasData) {
             List<Carpark> data = snapshot.data;
             Set<Marker> markers = generateMarkers(data);
+//            LatLng currentPosition = LatLng(_locationHandler.currentPosition.latitude,
+//                _locationHandler.currentPosition.longitude);
+            LatLng currentPosition = LatLng(1.3752598653584067, 103.95690821866181);
             return GoogleMap(
               onMapCreated: _onMapCreated,
               tiltGesturesEnabled: false,
               initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 11.0,
+                target: currentPosition,
+                zoom: 17.0,
               ),
               markers: markers,
               myLocationEnabled: true,
             );
           } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
+            return Center(child: Text(snapshot.error.toString()));
           } else {
             return Center(child: CircularProgressIndicator());
           }

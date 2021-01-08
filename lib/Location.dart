@@ -8,9 +8,14 @@ class Location {
   ///
   /// When the location services are not enabled or permissions
   /// are denied the `Future` will return an error.
+
+  Position currentPosition;
+  final Position _defaultPosition = new Position(longitude: 1.2966, latitude: 103.7764);
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
+
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -32,7 +37,10 @@ class Location {
       }
     }
 
-    return await Geolocator.getCurrentPosition();
+    return Geolocator.getCurrentPosition().then((position) {
+      currentPosition = position;
+      return position;
+    });
   }
 
   Future<List<Carpark>> returnNearestCarparkList() async {
@@ -56,9 +64,7 @@ class Location {
     return nearestCarparkList;
   }
 
-  Future<LatLng> returnCurrentPosition() async {
-    Position position = await _determinePosition();
-    LatLng currentPosition = new LatLng(position.latitude, position.longitude);
-    return currentPosition;
+  Position returnCurrentPosition() {
+    return currentPosition ?? _defaultPosition;
   }
 }
