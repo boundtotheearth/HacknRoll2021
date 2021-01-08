@@ -50,9 +50,12 @@ class _MapWidgetState extends State<MapWidget> {
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ImageByteFormat.png)).buffer.asUint8List();
+    return (await fi.image.toByteData(format: ImageByteFormat.png))
+        .buffer
+        .asUint8List();
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -65,9 +68,9 @@ class _MapWidgetState extends State<MapWidget> {
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
-        infoWindow: InfoWindow(
-            title: carpark.development,
-            snippet: carpark.availableLots.toString() + " Lots Available"),
+        // infoWindow: InfoWindow(
+        //     title: carpark.development,
+        //     snippet: carpark.availableLots.toString() + " Lots Available"),
         icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
         onTap: () => widget.selectCallback(carpark),
       );
