@@ -17,6 +17,7 @@ class HDBCarParkDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: ListView(
@@ -42,11 +43,15 @@ class HDBCarParkDetails extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Text(
-              carpark.development ?? "",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 21.0,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                carpark.development ?? "",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21.0,
+                ),
               ),
             ),
           ),
@@ -62,39 +67,61 @@ class HDBCarParkDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          carpark.system,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                        Text(
-                          carpark.carparktype,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                        Text(
-                          "NIGHT PARKING: ${carpark.nightParking}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                        Text(
-                          "SHORT-TERM: ${carpark.shortTermParking}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                      ],
+                    Expanded(
+                      child: ListView(
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        shrinkWrap: true,
+                        children: [
+                          Text(
+                            carpark.system,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                                fontSize: 12.0
+                            ),
+                          ),
+                          Text(
+                            carpark.carparktype,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                                fontSize: 12.0
+                            ),
+                          ),
+                          Text(
+                            "NIGHT PARKING: ${carpark.nightParking}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                                fontSize: 12.0
+                            ),
+                          ),
+                          Text(
+                            "SHORT-TERM: ${carpark.shortTermParking}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                                fontSize: 12.0
+                            ),
+                          ),
+                          Text(
+                            "FREE PARKING: ${carpark.freeParking}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                                fontSize: 12.0
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
+                    ),
                   ],
                 ),
-                Text(
-                  "FREE PARKING: ${carpark.freeParking}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: Colors.grey),
-                ),
+
               ],
             ),
           ),
