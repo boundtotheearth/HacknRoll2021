@@ -61,7 +61,6 @@ class _AvailableLotsState extends State<AvailableLots> {
         onTap: () {
           setState(() {
             _isAvailableLots = !_isAvailableLots;
-            print(_isAvailableLots);
           });
         },
       ),
