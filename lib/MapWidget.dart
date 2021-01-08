@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -35,17 +38,23 @@ class _MapWidgetState extends State<MapWidget> {
     _locationHandler = new Location();
     _carparkList = _locationHandler.returnNearestCarparkList();
 
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(), 'assets/GreenMarker.png')
-        .then((onValue) {
-      _availableIcon = onValue;
+    getBytesFromAsset("assets/images/GreenMarker.png", 100).then((bitmap) {
+      _availableIcon = BitmapDescriptor.fromBytes(bitmap);
     });
 
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(), 'assets/RedMarker.png')
-        .then((onValue) {
-      _notAvailableIcon = onValue;
+    getBytesFromAsset("assets/images/RedMarker.png", 100).then((bitmap) {
+      _notAvailableIcon = BitmapDescriptor.fromBytes(bitmap);
     });
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ImageByteFormat.png))
+        .buffer
+        .asUint8List();
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -58,9 +67,9 @@ class _MapWidgetState extends State<MapWidget> {
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
-        infoWindow: InfoWindow(
-            title: carpark.development,
-            snippet: carpark.availableLots.toString() + " Lots Available"),
+        // infoWindow: InfoWindow(
+        //     title: carpark.development,
+        //     snippet: carpark.availableLots.toString() + " Lots Available"),
         icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
         onTap: () => widget.selectCallback(carpark),
       );
@@ -75,9 +84,9 @@ class _MapWidgetState extends State<MapWidget> {
           if (snapshot.hasData) {
             List<Carpark> data = snapshot.data;
             Set<Marker> markers = generateMarkers(data);
-//            LatLng currentPosition = LatLng(_locationHandler.currentPosition.latitude,
-//                _locationHandler.currentPosition.longitude);
-            LatLng currentPosition = LatLng(1.3752598653584067, 103.95690821866181);
+            LatLng currentPosition = LatLng(
+                _locationHandler.currentPosition.latitude,
+                _locationHandler.currentPosition.longitude);
             return GoogleMap(
               onMapCreated: _onMapCreated,
               tiltGesturesEnabled: false,

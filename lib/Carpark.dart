@@ -13,6 +13,15 @@ class Carpark {
   Carpark({this.carparkId, this.area, this.development, this.location,
       this.availableLots, this.lotType, this.agency});
 
+  Carpark.fromCarpark(Carpark carpark) :
+    carparkId = carpark.carparkId,
+    area = carpark.area,
+    development = carpark.development,
+    location = carpark.location,
+    availableLots = carpark.availableLots,
+    lotType = carpark.lotType,
+    agency = carpark.agency;
+
   factory Carpark.fromJson(Map<String, dynamic> json) {
     List<String> coords = json['Location'].split(" ");
     LatLng location = new LatLng(double.parse(coords[0]), double.parse(coords[1]));
@@ -26,6 +35,10 @@ class Carpark {
       lotType: json['LotType'],
       agency: json['Agency'],
     );
+  }
+
+  Carpark withPrice() {
+    return this;
   }
 
   bool operator ==(o) => o is Carpark && carparkId == o.carparkId;

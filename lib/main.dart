@@ -3,8 +3,9 @@ import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/ListScreen.dart';
 import 'package:hacknroll2021/Location.dart';
 import 'package:hacknroll2021/MapScreen.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:hacknroll2021/ModelLoader.dart';
+import 'package:flutter_config/flutter_config.dart';
+import 'package:http/http.dart' as http;
 
 
 void main() async {
@@ -14,6 +15,9 @@ void main() async {
   runApp(MyApp());
   Location locator = new Location();
   List<Carpark> lst = await locator.returnNearestCarparkList();
+  // String finalURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=pasir&key=AIzaSyDJhKz-NeJuifrt1nljoIW9udShfkmUuWM';
+  // http.Response response = await http.get(finalURL);
+  // print(response.body);
 }
 
 class MyApp extends StatelessWidget {

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hacknroll2021/GoogleMapsButton.dart';
-import './Carpark.dart';
+import 'package:hacknroll2021/HDBCarpark.dart';
 
-class CarParkDetails extends StatelessWidget {
+class HDBCarParkDetails extends StatelessWidget {
   // const CarParkDetails({
   //   Key key,
   // }) : super(key: key);
 
   ScrollController _sc;
-  Carpark carpark;
+  HDBCarpark carpark;
 
-  CarParkDetails(this._sc, this.carpark);
+  HDBCarParkDetails(this._sc, this.carpark);
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +59,30 @@ class CarParkDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Text(
-                        "No Details Available",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, color: Colors.grey),
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          carpark.system,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          carpark.carparktype,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          "NIGHT PARKING: ${carpark.nightParking}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                        Text(
+                          "SHORT-TERM: ${carpark.shortTermParking}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.grey),
+                        ),
+                      ],
                     ),
                     Column(
                       children: [
@@ -82,6 +100,11 @@ class CarParkDetails extends StatelessWidget {
                       ],
                     )
                   ],
+                ),
+                Text(
+                  "FREE PARKING: ${carpark.freeParking}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: Colors.grey),
                 ),
               ],
             ),
