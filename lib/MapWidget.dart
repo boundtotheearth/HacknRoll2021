@@ -96,6 +96,7 @@ class _MapWidgetState extends State<MapWidget> {
               ),
               markers: markers,
               myLocationEnabled: true,
+              myLocationButtonEnabled: false,
             );
           } else if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));

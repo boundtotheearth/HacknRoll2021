@@ -5,6 +5,8 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_config/flutter_config.dart';
 import 'dart:convert';
+import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
+import 'package:implicitly_animated_reorderable_list/transitions.dart';
 
 class SearchBarWrapper extends StatefulWidget {
   @override
@@ -17,6 +19,8 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
   };
 
   List<Place> places = [];
+
+  final controller = FloatingSearchBarController();
 
   Future<List<Place>> fetchData(String query) async {
     int skip = 0;
@@ -46,66 +50,125 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    return buildSearchBar();
+  }
+
+  void onQueryChanged(String query) async {
+    List<Place> buildList = await fetchData(query);
+    setState(() {
+      places = buildList;
+    });
+  }
+
+  Widget buildSearchBar() {
+    final actions = [
+      FloatingSearchBarAction(
+        showIfOpened: false,
+        child: CircularButton(
+          icon: const Icon(Icons.place),
+          onPressed: () {},
+        ),
+      ),
+      FloatingSearchBarAction.searchToClear(
+        showIfClosed: false,
+      ),
+    ];
+
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return FloatingSearchBar(
-      hint: 'Search...',
-      scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-      transitionDuration: const Duration(milliseconds: 800),
-      transitionCurve: Curves.easeInOut,
-      physics: const BouncingScrollPhysics(),
-      axisAlignment: isPortrait ? 0.0 : -1.0,
-      openAxisAlignment: 0.0,
-      maxWidth: isPortrait ? 600 : 500,
-      debounceDelay: const Duration(milliseconds: 500),
-      onQueryChanged: (query) async {
-        List<Place> buildList = await fetchData(query);
-        setState(() {
-          places = buildList;
-        });
-      },
-      // Specify a custom transition to be used for
-      // animating between opened and closed stated.
-      transition: CircularFloatingSearchBarTransition(),
-      actions: [
-        FloatingSearchBarAction(
-          showIfOpened: false,
-          child: CircularButton(
-            icon: const Icon(Icons.place),
-            onPressed: () {},
-          ),
-        ),
-        FloatingSearchBarAction.searchToClear(
-          showIfClosed: false,
-        ),
-      ],
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Material(
-            color: Colors.white,
-            elevation: 4.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: places.map((place) {
-                return Container(
-                  height: 30,
-                  child: Text(
-                    place.description,
-                    softWrap: false,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )
-                  )
-                );
-              }).toList(),
+        automaticallyImplyBackButton: false,
+        controller: controller,
+        clearQueryOnClose: true,
+        hint: 'Search...',
+        iconColor: Colors.grey,
+        transitionDuration: const Duration(milliseconds: 500),
+        transitionCurve: Curves.easeInOutCubic,
+        physics: const BouncingScrollPhysics(),
+        axisAlignment: isPortrait ? 0.0 : -1.0,
+        openAxisAlignment: 0.0,
+        maxWidth: isPortrait ? 600 : 500,
+        actions: actions,
+        progress: false,
+        debounceDelay: const Duration(milliseconds: 500),
+        onQueryChanged: onQueryChanged,
+        scrollPadding: EdgeInsets.zero,
+        transition: CircularFloatingSearchBarTransition(),
+        builder: (context, _) => buildExpandableBody(),
+      );
+  }
+
+  Widget buildExpandableBody() {
+    return Material(
+      color: Colors.white,
+      elevation: 4.0,
+      borderRadius: BorderRadius.circular(8),
+      child: ImplicitlyAnimatedList<Place>(
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        physics: const NeverScrollableScrollPhysics(),
+        items: places,
+        areItemsTheSame: (a, b) => a == b,
+        itemBuilder: (context, animation, place, i) {
+          return SizeFadeTransition(
+            animation: animation,
+            child: buildItem(context, place),
+          );
+        },
+        updateItemBuilder: (context, animation, place) {
+          return FadeTransition(
+            opacity: animation,
+            child: buildItem(context, place),
+          );
+        },
+        insertDuration: Duration(milliseconds: 250),
+        removeDuration: Duration(milliseconds: 250),
+        updateDuration: Duration(milliseconds: 250),
+      ),
+    );
+  }
+
+  Widget buildItem(BuildContext context, Place place) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        InkWell(
+          onTap: () {
+            FloatingSearchBar.of(context).close();
+            Future.delayed(
+              const Duration(milliseconds: 500),
+                  () => places.clear(),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 36,
+                  child: Icon(Icons.place, key: Key('place')),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        place.description,
+                        style: textTheme.subtitle1,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 }
