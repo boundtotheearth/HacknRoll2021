@@ -28,6 +28,8 @@ class MapWidgetState extends State<MapWidget> {
   BitmapDescriptor _notAvailableIcon;
   LocationService _locationHandler;
 
+  Set<Marker> markers;
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +40,7 @@ class MapWidgetState extends State<MapWidget> {
 //    DataSource ds = new DataSource();
 //    _carparkList = ds.fetchData();
     _locationHandler = new LocationService();
-    _carparkList = _locationHandler.returnNearestCarparkList();
+    _carparkList = _locationHandler.returnNearestCarparkListFromCurrent();
 
     getBytesFromAsset("assets/images/GreenMarker.png", 100).then((bitmap) {
       _availableIcon = BitmapDescriptor.fromBytes(bitmap);
@@ -70,6 +72,9 @@ class MapWidgetState extends State<MapWidget> {
         CameraPosition(target: LatLng(loc.lat, loc.lng), zoom: 17.0));
     print("Moving");
     _mapController.moveCamera(cameraUpdate);
+    setState(() {
+      _carparkList = _locationHandler.returnNearestCarparkList(loc.lat, loc.lng);
+    });
   }
 
   void _onMapCreated(GoogleMapController controller) {

@@ -13,8 +13,8 @@ void main() async {
   await FlutterConfig.loadEnvVariables();
 
   runApp(MyApp());
-  LocationService locator = new LocationService();
-  List<Carpark> lst = await locator.returnNearestCarparkList();
+  //LocationService locator = new LocationService();
+  //List<Carpark> lst = await locator.returnNearestCarparkList();
   // String finalURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=pasir&key=AIzaSyDJhKz-NeJuifrt1nljoIW9udShfkmUuWM';
   // http.Response response = await http.get(finalURL);
   // print(response.body);
