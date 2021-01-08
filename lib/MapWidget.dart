@@ -29,6 +29,7 @@ class MapWidgetState extends State<MapWidget> {
   LocationService _locationHandler;
 
   Set<Marker> markers;
+  Marker locationMarker;
 
   @override
   void initState() {
@@ -42,11 +43,11 @@ class MapWidgetState extends State<MapWidget> {
     _locationHandler = new LocationService();
     _carparkList = _locationHandler.returnNearestCarparkListFromCurrent();
 
-    getBytesFromAsset("assets/images/GreenMarker.png", 100).then((bitmap) {
+    getBytesFromAsset("assets/images/GreenMarker.png", 80).then((bitmap) {
       _availableIcon = BitmapDescriptor.fromBytes(bitmap);
     });
 
-    getBytesFromAsset("assets/images/RedMarker.png", 100).then((bitmap) {
+    getBytesFromAsset("assets/images/RedMarker.png", 80).then((bitmap) {
       _notAvailableIcon = BitmapDescriptor.fromBytes(bitmap);
     });
   }
@@ -74,6 +75,10 @@ class MapWidgetState extends State<MapWidget> {
     _mapController.moveCamera(cameraUpdate);
     setState(() {
       _carparkList = _locationHandler.returnNearestCarparkList(loc.lat, loc.lng);
+      locationMarker = Marker(
+        markerId: MarkerId("currentLocation"),
+        position: LatLng(loc.lat, loc.lng)
+      );
     });
   }
 
@@ -83,7 +88,7 @@ class MapWidgetState extends State<MapWidget> {
   }
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
-    return carparkList.map((carpark) {
+    Set<Marker> markerList = carparkList.map((carpark) {
       return Marker(
         markerId: MarkerId(carpark.carparkId),
         position: carpark.location,
@@ -96,6 +101,12 @@ class MapWidgetState extends State<MapWidget> {
         },
       );
     }).toSet();
+
+    if(locationMarker != null) {
+      markerList.add(locationMarker);
+    }
+
+    return markerList;
   }
 
   @override
@@ -106,6 +117,7 @@ class MapWidgetState extends State<MapWidget> {
           if (snapshot.hasData) {
             List<Carpark> data = snapshot.data;
             Set<Marker> markers = generateMarkers(data);
+
             LatLng currentPosition = LatLng(
                 _locationHandler.currentPosition.latitude,
                 _locationHandler.currentPosition.longitude);
@@ -123,7 +135,21 @@ class MapWidgetState extends State<MapWidget> {
           } else if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else {
-            return Center(child: CircularProgressIndicator());
+            //return Center(child: CircularProgressIndicator());
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                      Icons.directions_car,
+                      color: Colors.blue,
+                      size: 140.0
+                  ),
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
           }
         });
   }

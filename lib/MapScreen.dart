@@ -69,16 +69,27 @@ class _MapScreenState extends State<MapScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          SlidingUpPanel(
-            body: MapWidget(
-              selectCallback: selectCarpark,
-              key: mapWidgetKey,
+          WillPopScope(
+            child: SlidingUpPanel(
+              body: MapWidget(
+                selectCallback: selectCarpark,
+                key: mapWidgetKey,
+              ),
+              controller: _pc,
+              isDraggable: false,
+              panelBuilder: (sc) => _panel(sc),
+              minHeight: 225,
+              borderRadius: radius,
             ),
-            controller: _pc,
-            isDraggable: false,
-            panelBuilder: (sc) => _panel(sc),
-            minHeight: 225,
-            borderRadius: radius,
+            onWillPop: () {
+              if(_pc.isPanelShown) {
+                print("Popop");
+                _pc.hide();
+                return Future.value(false);
+              } else {
+                return Future.value(true);
+              }
+            },
           ),
           SearchBarWrapper(
             updateSearchLocationCallBack: updateSearchLocationCallBack,
@@ -101,6 +112,8 @@ class _MapScreenState extends State<MapScreen> {
       return HDBCarParkDetails(sc, _selectedCarpark.withPrice(), _modelLoader);
     } else if (_selectedCarpark is MallCarpark) {
       return MallCarParkDetails(sc, _selectedCarpark.withPrice(), _modelLoader);
+    } else if (_selectedCarpark == null) {
+      return Container();
     } else {
       return CarParkDetails(sc, _selectedCarpark, _modelLoader);
     }

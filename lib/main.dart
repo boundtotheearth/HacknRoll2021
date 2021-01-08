@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Hack & Roll 2021'),
+      //home: MyHomePage(title: 'Hack & Roll 2021'),
+      home: MapScreen(title: "Park Where?"),
     );
   }
 }
