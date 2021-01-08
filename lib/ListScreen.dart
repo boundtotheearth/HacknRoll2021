@@ -18,7 +18,20 @@ class _ListScreenState extends State<ListScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: CarparkList()
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+                Icons.directions_car,
+                color: Colors.blue,
+                size: 140.0
+            ),
+            CircularProgressIndicator(),
+          ],
+        ),
+      ),
     );
   }
 }
