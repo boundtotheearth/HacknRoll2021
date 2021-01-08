@@ -2,29 +2,31 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/Location.dart';
+import './Place.dart';
+import "package:google_maps_webservice/places.dart";
 
 class MapWidget extends StatefulWidget {
   Function(Carpark) selectCallback;
-
-  MapWidget({this.selectCallback});
+  MapWidget({this.selectCallback, Key key}) : super(key: key);
 
   @override
-  _MapWidgetState createState() => _MapWidgetState();
+  MapWidgetState createState() => MapWidgetState();
 }
 
-class _MapWidgetState extends State<MapWidget> {
-  GoogleMapController mapController;
+class MapWidgetState extends State<MapWidget> {
   Future<List<Carpark>> _carparkList;
+  GoogleMapController _mapController;
 
   String _mapStyle;
   BitmapDescriptor _availableIcon;
   BitmapDescriptor _notAvailableIcon;
-  Location _locationHandler;
+  LocationService _locationHandler;
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _MapWidgetState extends State<MapWidget> {
 
 //    DataSource ds = new DataSource();
 //    _carparkList = ds.fetchData();
-    _locationHandler = new Location();
+    _locationHandler = new LocationService();
     _carparkList = _locationHandler.returnNearestCarparkList();
 
     getBytesFromAsset("assets/images/GreenMarker.png", 100).then((bitmap) {
@@ -57,9 +59,22 @@ class _MapWidgetState extends State<MapWidget> {
         .asUint8List();
   }
 
+  void moveToSearchLocation(Place place) async {
+    final places =
+    new GoogleMapsPlaces(apiKey: FlutterConfig.get('MAPS_API_KEY'));
+    PlacesDetailsResponse response =
+    await places.getDetailsByPlaceId(place.placeId);
+    Location loc = response.result.geometry.location;
+    CameraPosition(target: LatLng(loc.lat, loc.lng));
+    CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(loc.lat, loc.lng), zoom: 17.0));
+    print("Moving");
+    _mapController.moveCamera(cameraUpdate);
+  }
+
   void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-    mapController.setMapStyle(_mapStyle);
+    _mapController = controller;
+    _mapController.setMapStyle(_mapStyle);
   }
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
@@ -71,7 +86,9 @@ class _MapWidgetState extends State<MapWidget> {
         //     title: carpark.development,
         //     snippet: carpark.availableLots.toString() + " Lots Available"),
         icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
-        onTap: () => widget.selectCallback(carpark),
+        onTap: () {
+          widget.selectCallback(carpark);
+        },
       );
     }).toSet();
   }
