@@ -43,20 +43,24 @@ class LocationService {
     });
   }
 
-  Future<List<Carpark>> returnNearestCarparkList() async {
+  Future<List<Carpark>> returnNearestCarparkListFromCurrent() async {
+    Position position = await _determinePosition();
+    return returnNearestCarparkList(position.latitude, position.longitude);
+  }
+
+    Future<List<Carpark>> returnNearestCarparkList(double latitude, double longitude) async {
     double distanceQuota = 500.0;
     DataSource dataSource = new DataSource();
     List<Carpark> carparkList = await dataSource.fetchData();
     List<Carpark> nearestCarparkList = new List<Carpark>();
-    Position position = await _determinePosition();
-    var currentPosition = new LatLng(position.latitude, position.longitude);
+    var position = new LatLng(latitude, longitude);
     //var currentPosition = new LatLng(1.3753456822780044, 103.95699270293869);
     var distance = new Distance();
     for (int i = 0; i < carparkList.length; i++) {
       Carpark carpark = carparkList.elementAt(i);
       var carparkPosition =
           new LatLng(carpark.location.latitude, carpark.location.longitude);
-      if (distance.as(LengthUnit.Meter, currentPosition, carparkPosition) <
+      if (distance.as(LengthUnit.Meter, position, carparkPosition) <
           distanceQuota) {
         nearestCarparkList.add(carpark);
       }
