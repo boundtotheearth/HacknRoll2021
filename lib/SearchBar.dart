@@ -4,43 +4,26 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_config/flutter_config.dart';
 import 'dart:convert';
+import "package:google_maps_webservice/places.dart";
 
 class SearchBarWrapper extends StatefulWidget {
+  Function updateSearchLocationCallBack;
+
+  SearchBarWrapper({this.updateSearchLocationCallBack});
+
   @override
   _SearchBarWrapperState createState() => _SearchBarWrapperState();
 }
 
 class _SearchBarWrapperState extends State<SearchBarWrapper> {
-  final Map<String, String> headers = {
-    'MapKey': FlutterConfig.get('MAPS_API_KEY')
-  };
-
   List<Place> places = [];
 
   Future<List<Place>> fetchData(String query) async {
-    int skip = 0;
-    bool stop = false;
-    List<Place> placeList = [];
-
-    String finalURL =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?components=country:sg&input=${query}&key=${headers['MapKey']}';
-    http.Response response = await http.get(finalURL, headers: headers);
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      List<dynamic> rawList = data['predictions'];
-      rawList.forEach((element) {
-        placeList.add(Place(element['description'], element['place_id']));
-      });
-
-      if (rawList.length < 500) {
-        stop = true;
-      }
-      print(response.body);
-    } else {
-      throw Exception("Failed to load data");
-    }
-
+    final places =
+        new GoogleMapsPlaces(apiKey: FlutterConfig.get('MAPS_API_KEY'));
+    PlacesSearchResponse response = await places.searchByText(query);
+    List<Place> placeList =
+        response.results.map((res) => Place(res.name, res.placeId)).toList();
     return placeList;
   }
 
@@ -64,9 +47,6 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
         setState(() {
           places = buildList;
         });
-        // for (int i = 0; i < buildList.length; i++) {
-        //   print(buildList.elementAt(i).description);
-        // }
       },
       // Specify a custom transition to be used for
       // animating between opened and closed stated.
@@ -92,7 +72,13 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: places.map((place) {
-                return Container(height: 112, child: Text(place.description));
+                return GestureDetector(
+                  child: Container(
+                    height: 112,
+                    child: Text(place.description),
+                  ),
+                  onTap: () => widget.updateSearchLocationCallBack(place),
+                );
               }).toList(),
             ),
           ),

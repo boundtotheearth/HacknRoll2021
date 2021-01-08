@@ -3,19 +3,19 @@ import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/DataSource.dart';
 import 'package:latlong/latlong.dart';
 
-class Location {
+class LocationService {
   /// Determine the current position of the device.
   ///
   /// When the location services are not enabled or permissions
   /// are denied the `Future` will return an error.
 
   Position currentPosition;
-  final Position _defaultPosition = new Position(longitude: 1.2966, latitude: 103.7764);
+  final Position _defaultPosition =
+      new Position(longitude: 1.2966, latitude: 103.7764);
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {

@@ -6,6 +6,7 @@ import 'package:hacknroll2021/MallCarparkDetails.dart';
 import 'package:hacknroll2021/HDBCarpark.dart';
 import 'package:hacknroll2021/MallCarpark.dart';
 import 'package:hacknroll2021/MapWidget.dart';
+import 'package:hacknroll2021/Place.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import './CarparkDetails.dart';
 import './SearchBar.dart';
@@ -30,6 +31,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   PanelController _pc;
   Carpark _selectedCarpark;
+  MapWidget mapWidget;
 
   void selectCarpark(Carpark carpark) {
     setState(() {
@@ -52,21 +54,29 @@ class _MapScreenState extends State<MapScreen> {
       topRight: Radius.circular(24.0),
     );
 
+    mapWidget = MapWidget(
+      selectCallback: selectCarpark,
+    );
+
+    Function updateSearchLocationCallBack = (Place place) {
+      mapWidget.moveToSearchLocation(place);
+    };
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
           SlidingUpPanel(
-            body: MapWidget(
-              selectCallback: selectCarpark,
-            ),
+            body: mapWidget,
             controller: _pc,
             isDraggable: false,
             panelBuilder: (sc) => _panel(sc),
             minHeight: 225,
             borderRadius: radius,
           ),
-          SearchBarWrapper(),
+          SearchBarWrapper(
+            updateSearchLocationCallBack: updateSearchLocationCallBack,
+          ),
         ],
       ),
     );
