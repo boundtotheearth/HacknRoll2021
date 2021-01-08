@@ -115,10 +115,7 @@ class HDBCarParkDetails extends StatelessWidget {
                         ],
                       ),
                     ),
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
-                    ),
+                    AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
                   ],
                 ),
 
