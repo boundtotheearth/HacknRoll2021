@@ -47,7 +47,11 @@ class _MapScreenState extends State<MapScreen> {
     _pc = new PanelController();
     WidgetsBinding.instance.addPostFrameCallback((_) => _pc.hide());
     _modelLoader = ModelLoader();
-    _modelLoader.init();
+    _loadModel();
+  }
+
+  void _loadModel() async {
+    await _modelLoader.init();
   }
 
   @override

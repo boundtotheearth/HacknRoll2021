@@ -13,6 +13,13 @@ class AvailableLots extends StatefulWidget {
 
   final Carpark carpark;
   final ModelLoader modelLoader;
+
+  String _getPrediction() {
+    String id = carpark.carparkId;
+    DateTime dt = DateTime.now();
+    String pred = modelLoader.predict(id, dt).toString();
+    return pred;
+  }
 }
 
 class _AvailableLotsState extends State<AvailableLots> {
@@ -20,31 +27,35 @@ class _AvailableLotsState extends State<AvailableLots> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: _isAvailableLots? Column(
-        children: [
-          Text(
-            "AVAILABLE LOTS" ?? "",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          Text(
-            "${widget.carpark.availableLots ?? 0}",
-            softWrap: true,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-          ),
-        ],
-      ): Column(
-        children: [
-          Text(
-            "EXPECTED LOTS" ?? "",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          Text(
-            "${widget.carpark.availableLots ?? 0}",
-            softWrap: true,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-          ),
-        ],
-      ),
+      child: _isAvailableLots
+          ? Column(
+              children: [
+                Text(
+                  "AVAILABLE LOTS" ?? "",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+                Text(
+                  "${widget.carpark.availableLots ?? 0}",
+                  softWrap: true,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                ),
+              ],
+            )
+          : Column(
+              children: [
+                Text(
+                  "EXPECTED LOTS" ?? "",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+                Text(
+                  "${widget._getPrediction()}",
+                  softWrap: true,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                ),
+              ],
+            ),
       onTap: () {
         setState(() {
           _isAvailableLots = !_isAvailableLots;
