@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -35,17 +39,20 @@ class _MapWidgetState extends State<MapWidget> {
     _locationHandler = new Location();
     _carparkList = _locationHandler.returnNearestCarparkList();
 
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(), 'assets/GreenMarker.png')
-        .then((onValue) {
-      _availableIcon = onValue;
+    getBytesFromAsset("assets/images/GreenMarker.png", 100).then((bitmap) {
+      _availableIcon = BitmapDescriptor.fromBytes(bitmap);
     });
 
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(), 'assets/RedMarker.png')
-        .then((onValue) {
-      _notAvailableIcon = onValue;
+    getBytesFromAsset("assets/images/RedMarker.png", 100).then((bitmap) {
+      _notAvailableIcon = BitmapDescriptor.fromBytes(bitmap);
     });
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ImageByteFormat.png)).buffer.asUint8List();
   }
 
   void _onMapCreated(GoogleMapController controller) {
