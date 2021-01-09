@@ -2,14 +2,14 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_config/flutter_config.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import "package:google_maps_webservice/places.dart";
 import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/LocationService.dart';
+
 import './Place.dart';
-import "package:google_maps_webservice/places.dart";
 
 class MapWidget extends StatefulWidget {
   final Function(Carpark) selectCallback;
@@ -39,8 +39,6 @@ class MapWidgetState extends State<MapWidget> {
       _mapStyle = string;
     });
 
-//    DataSource ds = new DataSource();
-//    _carparkList = ds.fetchData();
     _locationHandler = new LocationService();
     _carparkList = _locationHandler.returnNearestCarparkListFromCurrent();
 
@@ -65,9 +63,9 @@ class MapWidgetState extends State<MapWidget> {
 
   void moveToSearchLocation(Place place) async {
     final places =
-    new GoogleMapsPlaces(apiKey: FlutterConfig.get('MAPS_API_KEY'));
+        new GoogleMapsPlaces(apiKey: FlutterConfig.get('MAPS_API_KEY'));
     PlacesDetailsResponse response =
-    await places.getDetailsByPlaceId(place.placeId);
+        await places.getDetailsByPlaceId(place.placeId);
     Location loc = response.result.geometry.location;
     CameraPosition(target: LatLng(loc.lat, loc.lng));
     CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(
@@ -75,11 +73,11 @@ class MapWidgetState extends State<MapWidget> {
     print("Moving");
     _mapController.moveCamera(cameraUpdate);
     setState(() {
-      _carparkList = _locationHandler.returnNearestCarparkList(loc.lat, loc.lng);
+      _carparkList =
+          _locationHandler.returnNearestCarparkList(loc.lat, loc.lng);
       locationMarker = Marker(
-        markerId: MarkerId("currentLocation"),
-        position: LatLng(loc.lat, loc.lng)
-      );
+          markerId: MarkerId("currentLocation"),
+          position: LatLng(loc.lat, loc.lng));
     });
   }
 
@@ -89,21 +87,20 @@ class MapWidgetState extends State<MapWidget> {
   }
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
-    Set<Marker> markerList = carparkList.map((carpark) {
-      return Marker(
-        markerId: MarkerId(carpark.carparkId),
-        position: carpark.location,
-        // infoWindow: InfoWindow(
-        //     title: carpark.development,
-        //     snippet: carpark.availableLots.toString() + " Lots Available"),
-        icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
-        onTap: () {
-          widget.selectCallback(carpark);
-        },
-      );
-    }).toSet();
+    Set<Marker> markerList = carparkList.map(
+      (carpark) {
+        return Marker(
+          markerId: MarkerId(carpark.carparkId),
+          position: carpark.location,
+          icon: carpark.availableLots > 10 ? _availableIcon : _notAvailableIcon,
+          onTap: () {
+            widget.selectCallback(carpark);
+          },
+        );
+      },
+    ).toSet();
 
-    if(locationMarker != null) {
+    if (locationMarker != null) {
       markerList.add(locationMarker);
     }
 
@@ -113,45 +110,41 @@ class MapWidgetState extends State<MapWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Carpark>>(
-        future: _carparkList,
-        builder: (BuildContext context, AsyncSnapshot<List<Carpark>> snapshot) {
-          if (snapshot.hasData) {
-            List<Carpark> data = snapshot.data;
-            Set<Marker> markers = generateMarkers(data);
+      future: _carparkList,
+      builder: (BuildContext context, AsyncSnapshot<List<Carpark>> snapshot) {
+        if (snapshot.hasData) {
+          List<Carpark> data = snapshot.data;
+          Set<Marker> markers = generateMarkers(data);
 
-            LatLng currentPosition = LatLng(
-                _locationHandler.currentPosition.latitude,
-                _locationHandler.currentPosition.longitude);
-            return GoogleMap(
-              onMapCreated: _onMapCreated,
-              tiltGesturesEnabled: false,
-              initialCameraPosition: CameraPosition(
-                target: currentPosition,
-                zoom: 17.0,
-              ),
-              markers: markers,
-              myLocationEnabled: true,
-              myLocationButtonEnabled: false,
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
-          } else {
-            //return Center(child: CircularProgressIndicator());
-            return Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                      Icons.directions_car,
-                      color: Colors.blue,
-                      size: 140.0
-                  ),
-                  CircularProgressIndicator(),
-                ],
-              ),
-            );
-          }
-        });
+          LatLng currentPosition = LatLng(
+              _locationHandler.currentPosition.latitude,
+              _locationHandler.currentPosition.longitude);
+          return GoogleMap(
+            onMapCreated: _onMapCreated,
+            tiltGesturesEnabled: false,
+            initialCameraPosition: CameraPosition(
+              target: currentPosition,
+              zoom: 17.0,
+            ),
+            markers: markers,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: false,
+          );
+        } else if (snapshot.hasError) {
+          return Center(child: Text(snapshot.error.toString()));
+        } else {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.directions_car, color: Colors.blue, size: 140.0),
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        }
+      },
+    );
   }
 }

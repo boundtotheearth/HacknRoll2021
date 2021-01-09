@@ -6,8 +6,9 @@ class MallCarpark extends Carpark {
   String sat;
   String sunPH;
 
-  MallCarpark.fromCarpark({Carpark carpark, this.weekday1, this.weekday2, this.sat,
-    this.sunPH}) : super.fromCarpark(carpark);
+  MallCarpark.fromCarpark(
+      {Carpark carpark, this.weekday1, this.weekday2, this.sat, this.sunPH})
+      : super.fromCarpark(carpark);
 
   factory MallCarpark.fromJson(Carpark carpark, Map<String, String> json) {
     return MallCarpark.fromCarpark(
@@ -23,5 +24,4 @@ class MallCarpark extends Carpark {
   MallCarpark withPrice() {
     return this;
   }
-
 }

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:hacknroll2021/Carpark.dart';
 import 'package:hacknroll2021/HDBCarpark.dart';
 import 'package:hacknroll2021/MallCarpark.dart';
 import 'package:http/http.dart' as http;
-import 'package:csv/csv.dart';
-import 'package:flutter_config/flutter_config.dart';
 
 class DataSource {
   final String sourceURL =
@@ -32,8 +32,9 @@ class DataSource {
     List<Carpark> carparkList = [];
 
     //HDB Price Data
-    List<List<dynamic>> hdbData = await rootBundle.loadStructuredData(hdbInfoSource,
-            (csv) => Future.value(CsvToListConverter().convert(csv)));
+    List<List<dynamic>> hdbData = await rootBundle.loadStructuredData(
+        hdbInfoSource,
+        (csv) => Future.value(CsvToListConverter().convert(csv)));
 
     hdbData.forEach((entry) {
       Map<String, String> data = Map();
@@ -54,8 +55,9 @@ class DataSource {
     });
 
     //Mall Price Data
-    List<List<dynamic>> mallData = await rootBundle.loadStructuredData(mallInfoSource,
-            (csv) => Future.value(CsvToListConverter().convert(csv)));
+    List<List<dynamic>> mallData = await rootBundle.loadStructuredData(
+        mallInfoSource,
+        (csv) => Future.value(CsvToListConverter().convert(csv)));
     mallData.forEach((entry) {
       Map<String, String> data = Map();
       data['CarPark'] = entry[0].toString();
@@ -78,17 +80,15 @@ class DataSource {
         List<dynamic> rawList = data['value'];
         rawList.forEach((element) {
           Carpark carpark = Carpark.fromJson(element);
-          if(hdbInfo.containsKey(carpark.carparkId)) {
+          if (hdbInfo.containsKey(carpark.carparkId)) {
             Map<String, String> priceInfo = hdbInfo[carpark.carparkId];
             carpark = HDBCarpark.fromJson(carpark, priceInfo);
           }
 
-          if(mallInfo.containsKey(carpark.development)) {
+          if (mallInfo.containsKey(carpark.development)) {
             Map<String, String> priceInfo = mallInfo[carpark.development];
             carpark = MallCarpark.fromJson(carpark, priceInfo);
           }
-
-          //TODO: Improve Mall Carparks
 
           carparkList.add(carpark);
         });
@@ -103,6 +103,5 @@ class DataSource {
     } while (!stop);
 
     return carparkList.toSet().toList(); //remove duplicates
-    //return carparkList;
   }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hacknroll2021/GoogleMapsButton.dart';
-import './Carpark.dart';
 import 'package:hacknroll2021/AvailableLots.dart';
-import 'ModelLoader.dart';
+import 'package:hacknroll2021/GoogleMapsButton.dart';
+
+import './Carpark.dart';
+import './ModelLoader.dart';
 
 class CarParkDetails extends StatelessWidget {
   final ScrollController _sc;
@@ -18,21 +19,6 @@ class CarParkDetails extends StatelessWidget {
       child: ListView(
         controller: _sc,
         children: <Widget>[
-          // SizedBox(
-          //   height: 12.0,
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Container(
-          //       width: 30,
-          //       height: 5,
-          //       decoration: BoxDecoration(
-          //           color: Colors.grey[300],
-          //           borderRadius: BorderRadius.all(Radius.circular(12.0))),
-          //     ),
-          //   ],
-          // ),
           SizedBox(
             height: 18.0,
           ),
@@ -65,7 +51,10 @@ class CarParkDetails extends StatelessWidget {
                             fontWeight: FontWeight.w600, color: Colors.grey),
                       ),
                     ),
-                    AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
+                    AvailableLots(
+                      carpark: carpark,
+                      modelLoader: _modelLoader,
+                    ),
                   ],
                 ),
               ],

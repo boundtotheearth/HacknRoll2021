@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'Carpark.dart';
-import 'ModelLoader.dart';
+
+import './Carpark.dart';
+import './ModelLoader.dart';
 
 class AvailableLots extends StatefulWidget {
   @override

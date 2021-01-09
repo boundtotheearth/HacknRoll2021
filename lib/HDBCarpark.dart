@@ -7,9 +7,14 @@ class HDBCarpark extends Carpark {
   String freeParking;
   String nightParking;
 
-
-  HDBCarpark.fromCarpark({Carpark carpark, this.carparktype, this.system, this.shortTermParking,
-      this.freeParking, this.nightParking}) : super.fromCarpark(carpark);
+  HDBCarpark.fromCarpark(
+      {Carpark carpark,
+      this.carparktype,
+      this.system,
+      this.shortTermParking,
+      this.freeParking,
+      this.nightParking})
+      : super.fromCarpark(carpark);
 
   factory HDBCarpark.fromJson(Carpark carpark, Map<String, String> json) {
     return HDBCarpark.fromCarpark(

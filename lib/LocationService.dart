@@ -48,13 +48,13 @@ class LocationService {
     return returnNearestCarparkList(position.latitude, position.longitude);
   }
 
-    Future<List<Carpark>> returnNearestCarparkList(double latitude, double longitude) async {
+  Future<List<Carpark>> returnNearestCarparkList(
+      double latitude, double longitude) async {
     double distanceQuota = 500.0;
     DataSource dataSource = new DataSource();
     List<Carpark> carparkList = await dataSource.fetchData();
     List<Carpark> nearestCarparkList = new List<Carpark>();
     var position = new LatLng(latitude, longitude);
-    //var currentPosition = new LatLng(1.3753456822780044, 103.95699270293869);
     var distance = new Distance();
     for (int i = 0; i < carparkList.length; i++) {
       Carpark carpark = carparkList.elementAt(i);

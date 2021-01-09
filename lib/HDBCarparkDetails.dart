@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hacknroll2021/AvailableLots.dart';
 import 'package:hacknroll2021/GoogleMapsButton.dart';
 import 'package:hacknroll2021/HDBCarpark.dart';
+
 import 'ModelLoader.dart';
 
 class HDBCarParkDetails extends StatelessWidget {
@@ -13,27 +14,11 @@ class HDBCarParkDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: ListView(
         controller: _sc,
         children: <Widget>[
-          // SizedBox(
-          //   height: 12.0,
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Container(
-          //       width: 30,
-          //       height: 5,
-          //       decoration: BoxDecoration(
-          //           color: Colors.grey[300],
-          //           borderRadius: BorderRadius.all(Radius.circular(12.0))),
-          //     ),
-          //   ],
-          // ),
           SizedBox(
             height: 18.0,
           ),
@@ -70,7 +55,6 @@ class HDBCarParkDetails extends StatelessWidget {
                       child: Container(
                         height: 85,
                         child: ListView(
-                          //crossAxisAlignment: CrossAxisAlignment.start,
                           shrinkWrap: true,
                           children: [
                             Text(
@@ -78,70 +62,52 @@ class HDBCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
+                                  fontSize: 12.0),
                             ),
                             Text(
                               carpark.carparktype,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
+                                  fontSize: 12.0),
                             ),
                             Text(
                               "NIGHT PARKING: ${carpark.nightParking}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
+                                  fontSize: 12.0),
                             ),
                             Text(
                               "SHORT-TERM: ${carpark.shortTermParking}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
+                                  fontSize: 12.0),
                             ),
                             Text(
                               "FREE PARKING: ${carpark.freeParking}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
+                                  fontSize: 12.0),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
+                    AvailableLots(
+                      carpark: carpark,
+                      modelLoader: _modelLoader,
+                    ),
                   ],
                 ),
-
               ],
             ),
           ),
           SizedBox(
             height: 10,
           ),
-//          FlatButton(
-//            shape: RoundedRectangleBorder(
-//                borderRadius: BorderRadius.circular(8.0),
-//                side: BorderSide(color: Colors.blueAccent)),
-//            color: Colors.blueAccent,
-//            textColor: Colors.white,
-//            padding: EdgeInsets.symmetric(vertical: 8.0),
-//            onPressed: () {},
-//            child: Text(
-//              "Bring me there",
-//              style: TextStyle(
-//                fontSize: 28.0,
-//              ),
-//            ),
-//          ),
           GoogleMapsButton(null, carpark.location),
         ],
       ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hacknroll2021/AvailableLots.dart';
 import 'package:hacknroll2021/GoogleMapsButton.dart';
 import 'package:hacknroll2021/MallCarpark.dart';
-import 'ModelLoader.dart';
+
+import './ModelLoader.dart';
 
 class MallCarParkDetails extends StatelessWidget {
   final ScrollController _sc;
@@ -51,72 +52,67 @@ class MallCarParkDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Container(
-                        height: 85,
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: [
-                            Text(
-                              "WEEKDAY:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                            Text(
-                              carpark.weekday1,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                            Text(
-                              carpark.weekday2,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                            Text(
-                              "SATURDAY:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                            Text(
-                              carpark.sat,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                            Text(
-                              "SUNDAY & PH:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                            Text(
-                              carpark.sunPH,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                        child: Container(
+                      height: 85,
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          Text(
+                            "WEEKDAY:",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 12.0),
+                          ),
+                          Text(
+                            carpark.weekday1,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 12.0),
+                          ),
+                          Text(
+                            carpark.weekday2,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 12.0),
+                          ),
+                          Text(
+                            "SATURDAY:",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 12.0),
+                          ),
+                          Text(
+                            carpark.sat,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 12.0),
+                          ),
+                          Text(
+                            "SUNDAY & PH:",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 12.0),
+                          ),
+                          Text(
+                            carpark.sunPH,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 12.0),
+                          ),
+                        ],
+                      ),
+                    )),
+                    AvailableLots(
+                      carpark: carpark,
+                      modelLoader: _modelLoader,
                     ),
-                    AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
                   ],
                 ),
               ],

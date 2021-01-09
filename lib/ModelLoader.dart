@@ -1,6 +1,6 @@
-import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 class ModelLoader {
   final _modelFile = 'model.tflite';
@@ -60,7 +60,6 @@ class ModelLoader {
     i[1] = hour;
     i[a] = 1;
 
-    List<List<dynamic>> input = [i];
     var output = List<int>(1).reshape([1, 1]);
     _interpreter.run(i, output);
     return output[0][0];

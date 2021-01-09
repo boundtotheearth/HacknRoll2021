@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './Place.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:flutter_config/flutter_config.dart';
+import "package:google_maps_webservice/places.dart";
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
-import "package:google_maps_webservice/places.dart";
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
+import './Place.dart';
 
 class SearchBarWrapper extends StatefulWidget {
   final Function updateSearchLocationCallBack;
@@ -56,28 +57,29 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
       ),
     ];
 
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return FloatingSearchBar(
-        automaticallyImplyBackButton: false,
-        controller: controller,
-        clearQueryOnClose: true,
-        hint: 'Search...',
-        iconColor: Colors.grey,
-        transitionDuration: const Duration(milliseconds: 500),
-        transitionCurve: Curves.easeInOutCubic,
-        physics: const BouncingScrollPhysics(),
-        axisAlignment: isPortrait ? 0.0 : -1.0,
-        openAxisAlignment: 0.0,
-        maxWidth: isPortrait ? 600 : 500,
-        actions: actions,
-        progress: false,
-        debounceDelay: const Duration(milliseconds: 500),
-        onQueryChanged: onQueryChanged,
-        scrollPadding: EdgeInsets.zero,
-        transition: CircularFloatingSearchBarTransition(),
-        builder: (context, _) => buildExpandableBody(),
-      );
+      automaticallyImplyBackButton: false,
+      controller: controller,
+      clearQueryOnClose: true,
+      hint: 'Search...',
+      iconColor: Colors.grey,
+      transitionDuration: const Duration(milliseconds: 500),
+      transitionCurve: Curves.easeInOutCubic,
+      physics: const BouncingScrollPhysics(),
+      axisAlignment: isPortrait ? 0.0 : -1.0,
+      openAxisAlignment: 0.0,
+      maxWidth: isPortrait ? 600 : 500,
+      actions: actions,
+      progress: false,
+      debounceDelay: const Duration(milliseconds: 500),
+      onQueryChanged: onQueryChanged,
+      scrollPadding: EdgeInsets.zero,
+      transition: CircularFloatingSearchBarTransition(),
+      builder: (context, _) => buildExpandableBody(),
+    );
   }
 
   Widget buildExpandableBody() {

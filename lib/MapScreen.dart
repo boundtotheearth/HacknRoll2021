@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hacknroll2021/Carpark.dart';
-import 'package:hacknroll2021/HDBCarparkDetails.dart';
-import 'package:hacknroll2021/MallCarparkDetails.dart';
 import 'package:hacknroll2021/HDBCarpark.dart';
+import 'package:hacknroll2021/HDBCarparkDetails.dart';
 import 'package:hacknroll2021/MallCarpark.dart';
+import 'package:hacknroll2021/MallCarparkDetails.dart';
 import 'package:hacknroll2021/MapWidget.dart';
 import 'package:hacknroll2021/Place.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 import './CarparkDetails.dart';
+import './ModelLoader.dart';
 import './SearchBar.dart';
-import 'ModelLoader.dart';
 
 /*
     to programatically open/close bottom sheet, use:
@@ -82,7 +83,7 @@ class _MapScreenState extends State<MapScreen> {
               borderRadius: radius,
             ),
             onWillPop: () {
-              if(_pc.isPanelShown) {
+              if (_pc.isPanelShown) {
                 _pc.hide();
                 return Future.value(false);
               } else {

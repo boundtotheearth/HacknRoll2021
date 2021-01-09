@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GoogleMapsButton extends StatelessWidget {
-
   final LatLng origin;
   final LatLng destination;
 
@@ -33,18 +32,22 @@ class GoogleMapsButton extends StatelessWidget {
   }
 
   Future<void> openMap(LatLng origin, LatLng destination) async {
-    String originCoord = origin == null ? '' : '${origin.latitude},${origin.longitude}';
-    String destinationCoord = '${destination.latitude},${destination.longitude}';
+    String originCoord =
+        origin == null ? '' : '${origin.latitude},${origin.longitude}';
+    String destinationCoord =
+        '${destination.latitude},${destination.longitude}';
 
-    String googleUrl = 'https://www.google.com/maps/dir/?api=1&origin=$originCoord&destination=$destinationCoord';
-    String appleUrl = 'http://maps.apple.com/?saddr=$originCoord&daddr=$destinationCoord';
+    String googleUrl =
+        'https://www.google.com/maps/dir/?api=1&origin=$originCoord&destination=$destinationCoord';
+    String appleUrl =
+        'http://maps.apple.com/?saddr=$originCoord&daddr=$destinationCoord';
 
     if (Platform.isIOS && await canLaunch(appleUrl)) {
       await launch(appleUrl);
     } else if (Platform.isAndroid && await canLaunch(googleUrl)) {
       await launch(googleUrl);
     } else {
-        throw 'Could not open the map.';
+      throw 'Could not open the map.';
     }
   }
 }

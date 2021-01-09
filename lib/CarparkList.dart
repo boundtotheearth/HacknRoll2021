@@ -22,29 +22,28 @@ class _CarparkListState extends State<CarparkList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Carpark>>(
-      future: _carparkList,
-      builder: (BuildContext context, AsyncSnapshot<List<Carpark>> snapshot) {
-        if(snapshot.hasData) {
-          List<Carpark> data = snapshot.data;
-          return ListView.builder(
-              padding: EdgeInsets.all(16.0),
-              itemBuilder: (context, i) {
-                if (i.isOdd) return Divider();
+        future: _carparkList,
+        builder: (BuildContext context, AsyncSnapshot<List<Carpark>> snapshot) {
+          if (snapshot.hasData) {
+            List<Carpark> data = snapshot.data;
+            return ListView.builder(
+                padding: EdgeInsets.all(16.0),
+                itemBuilder: (context, i) {
+                  if (i.isOdd) return Divider();
 
-                final index = i ~/ 2;
-                if (index >= data.length) {
-                  return null;
-                }
+                  final index = i ~/ 2;
+                  if (index >= data.length) {
+                    return null;
+                  }
 
-                return _buildRow(data[index]);
-              });
-        } else if(snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        } else {
-          return CircularProgressIndicator();
-        }
-      }
-    );
+                  return _buildRow(data[index]);
+                });
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
   }
 
   Widget _buildRow(Carpark carpark) {
@@ -55,6 +54,4 @@ class _CarparkListState extends State<CarparkList> {
       ),
     );
   }
-
-  
 }
