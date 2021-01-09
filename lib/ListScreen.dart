@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hacknroll2021/CarparkList.dart';
-import 'package:hacknroll2021/MapWidget.dart';
 
 class ListScreen extends StatefulWidget {
   ListScreen({Key key, this.title}) : super(key: key);

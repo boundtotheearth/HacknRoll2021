@@ -12,7 +12,8 @@ import './Place.dart';
 import "package:google_maps_webservice/places.dart";
 
 class MapWidget extends StatefulWidget {
-  Function(Carpark) selectCallback;
+  final Function(Carpark) selectCallback;
+
   MapWidget({this.selectCallback, Key key}) : super(key: key);
 
   @override

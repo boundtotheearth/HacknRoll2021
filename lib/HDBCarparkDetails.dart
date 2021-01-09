@@ -5,13 +5,9 @@ import 'package:hacknroll2021/HDBCarpark.dart';
 import 'ModelLoader.dart';
 
 class HDBCarParkDetails extends StatelessWidget {
-  // const CarParkDetails({
-  //   Key key,
-  // }) : super(key: key);
-
-  ScrollController _sc;
-  HDBCarpark carpark;
-  ModelLoader _modelLoader;
+  final ScrollController _sc;
+  final HDBCarpark carpark;
+  final ModelLoader _modelLoader;
 
   HDBCarParkDetails(this._sc, this.carpark, this._modelLoader);
 
@@ -41,16 +37,19 @@ class HDBCarParkDetails extends StatelessWidget {
           SizedBox(
             height: 18.0,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: FittedBox(
-              fit: BoxFit.contain,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                carpark.development ?? "",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 21.0,
+          Container(
+            height: 30,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  carpark.development ?? "",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 21.0,
+                  ),
                 ),
               ),
             ),
@@ -69,6 +68,7 @@ class HDBCarParkDetails extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
+                        height: 85,
                         child: ListView(
                           //crossAxisAlignment: CrossAxisAlignment.start,
                           shrinkWrap: true,

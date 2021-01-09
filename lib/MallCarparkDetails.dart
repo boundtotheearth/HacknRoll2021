@@ -5,13 +5,9 @@ import 'package:hacknroll2021/MallCarpark.dart';
 import 'ModelLoader.dart';
 
 class MallCarParkDetails extends StatelessWidget {
-  // const CarParkDetails({
-  //   Key key,
-  // }) : super(key: key);
-
-  ScrollController _sc;
-  MallCarpark carpark;
-  ModelLoader _modelLoader;
+  final ScrollController _sc;
+  final MallCarpark carpark;
+  final ModelLoader _modelLoader;
 
   MallCarParkDetails(this._sc, this.carpark, this._modelLoader);
 
@@ -22,31 +18,23 @@ class MallCarParkDetails extends StatelessWidget {
       child: ListView(
         controller: _sc,
         children: <Widget>[
-          // SizedBox(
-          //   height: 12.0,
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Container(
-          //       width: 30,
-          //       height: 5,
-          //       decoration: BoxDecoration(
-          //           color: Colors.grey[300],
-          //           borderRadius: BorderRadius.all(Radius.circular(12.0))),
-          //     ),
-          //   ],
-          // ),
           SizedBox(
             height: 18.0,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Text(
-              carpark.development ?? "",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 21.0,
+          Container(
+            height: 30,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  carpark.development ?? "",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 21.0,
+                  ),
+                ),
               ),
             ),
           ),
@@ -64,7 +52,7 @@ class MallCarParkDetails extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                        height: 75,
+                        height: 85,
                         child: ListView(
                           shrinkWrap: true,
                           children: [
@@ -73,7 +61,7 @@ class MallCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                  fontSize: 10.0
+                                  fontSize: 12.0
                               ),
                             ),
                             Text(
@@ -81,7 +69,7 @@ class MallCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                  fontSize: 10.0
+                                  fontSize: 12.0
                               ),
                             ),
                             Text(
@@ -89,7 +77,7 @@ class MallCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                  fontSize: 10.0
+                                  fontSize: 12.0
                               ),
                             ),
                             Text(
@@ -97,7 +85,7 @@ class MallCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                  fontSize: 10.0
+                                  fontSize: 12.0
                               ),
                             ),
                             Text(
@@ -105,7 +93,7 @@ class MallCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                  fontSize: 10.0
+                                  fontSize: 12.0
                               ),
                             ),
                             Text(
@@ -113,7 +101,7 @@ class MallCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                  fontSize: 10.0
+                                  fontSize: 12.0
                               ),
                             ),
                             Text(
@@ -121,7 +109,7 @@ class MallCarParkDetails extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                  fontSize: 10.0
+                                  fontSize: 12.0
                               ),
                             ),
                           ],

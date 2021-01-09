@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import './Place.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'dart:convert';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import "package:google_maps_webservice/places.dart";
 
 class SearchBarWrapper extends StatefulWidget {
-  Function updateSearchLocationCallBack;
+  final Function updateSearchLocationCallBack;
 
   SearchBarWrapper({this.updateSearchLocationCallBack});
 

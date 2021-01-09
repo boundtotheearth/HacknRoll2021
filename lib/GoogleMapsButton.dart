@@ -6,8 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class GoogleMapsButton extends StatelessWidget {
 
-  LatLng origin;
-  LatLng destination;
+  final LatLng origin;
+  final LatLng destination;
 
   GoogleMapsButton(this.origin, this.destination);
 

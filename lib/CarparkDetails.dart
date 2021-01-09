@@ -5,13 +5,9 @@ import 'package:hacknroll2021/AvailableLots.dart';
 import 'ModelLoader.dart';
 
 class CarParkDetails extends StatelessWidget {
-  // const CarParkDetails({
-  //   Key key,
-  // }) : super(key: key);
-
-  ScrollController _sc;
-  Carpark carpark;
-  ModelLoader _modelLoader;
+  final ScrollController _sc;
+  final Carpark carpark;
+  final ModelLoader _modelLoader;
 
   CarParkDetails(this._sc, this.carpark, this._modelLoader);
 
