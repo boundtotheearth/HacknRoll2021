@@ -42,7 +42,12 @@ class ModelLoader {
 
   int predict(String id, DateTime dt) {
     double day = (dt.weekday - 1).toDouble();
-    double hour = dt.hour.toDouble();
+    double hour;
+    if (dt.hour < 23) {
+      hour = dt.hour.toDouble() + 1.0;
+    } else {
+      hour = 0.0;
+    }
     int out = _predictData(id, day, hour).toInt();
     return out;
   }
