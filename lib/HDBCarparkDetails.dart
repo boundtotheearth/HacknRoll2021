@@ -68,51 +68,53 @@ class HDBCarParkDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: ListView(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        shrinkWrap: true,
-                        children: [
-                          Text(
-                            carpark.system,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                                fontSize: 12.0
+                      child: Container(
+                        child: ListView(
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          shrinkWrap: true,
+                          children: [
+                            Text(
+                              carpark.system,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
+                                  fontSize: 12.0
+                              ),
                             ),
-                          ),
-                          Text(
-                            carpark.carparktype,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                                fontSize: 12.0
+                            Text(
+                              carpark.carparktype,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
+                                  fontSize: 12.0
+                              ),
                             ),
-                          ),
-                          Text(
-                            "NIGHT PARKING: ${carpark.nightParking}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                                fontSize: 12.0
+                            Text(
+                              "NIGHT PARKING: ${carpark.nightParking}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
+                                  fontSize: 12.0
+                              ),
                             ),
-                          ),
-                          Text(
-                            "SHORT-TERM: ${carpark.shortTermParking}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                                fontSize: 12.0
+                            Text(
+                              "SHORT-TERM: ${carpark.shortTermParking}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
+                                  fontSize: 12.0
+                              ),
                             ),
-                          ),
-                          Text(
-                            "FREE PARKING: ${carpark.freeParking}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                                fontSize: 12.0
+                            Text(
+                              "FREE PARKING: ${carpark.freeParking}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
+                                  fontSize: 12.0
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     AvailableLots(carpark: carpark, modelLoader: _modelLoader,),

@@ -133,9 +133,8 @@ class _SearchBarWrapperState extends State<SearchBarWrapper> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: ListView(
+                    shrinkWrap: true,
                     children: [
                       Text(
                         place.description,

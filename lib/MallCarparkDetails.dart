@@ -62,45 +62,71 @@ class MallCarParkDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "WEEKDAY:",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.grey),
+                    Expanded(
+                      child: Container(
+                        height: 75,
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: [
+                            Text(
+                              "WEEKDAY:",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 10.0
+                              ),
+                            ),
+                            Text(
+                              carpark.weekday1,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 10.0
+                              ),
+                            ),
+                            Text(
+                              carpark.weekday2,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 10.0
+                              ),
+                            ),
+                            Text(
+                              "SATURDAY:",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 10.0
+                              ),
+                            ),
+                            Text(
+                              carpark.sat,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 10.0
+                              ),
+                            ),
+                            Text(
+                              "SUNDAY & PH:",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 10.0
+                              ),
+                            ),
+                            Text(
+                              carpark.sunPH,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 10.0
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          carpark.weekday1,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                        Text(
-                          carpark.weekday2,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                        Text(
-                          "SATURDAY:",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.grey),
-                        ),
-                        Text(
-                          carpark.sat,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                        Text(
-                          "SUNDAY & PH:",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.grey),
-                        ),
-                        Text(
-                          carpark.sunPH,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.grey),
-                        ),
-                      ],
+                      )
                     ),
                     AvailableLots(carpark: carpark, modelLoader: _modelLoader,),
                   ],
