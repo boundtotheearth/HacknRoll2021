@@ -13,8 +13,9 @@ import './Place.dart';
 
 class MapWidget extends StatefulWidget {
   final Function(Carpark) selectCallback;
-
-  MapWidget({this.selectCallback, Key key}) : super(key: key);
+  final Function loadedCallback;
+  MapWidget({this.selectCallback, this.loadedCallback, Key key})
+      : super(key: key);
 
   @override
   MapWidgetState createState() => MapWidgetState();
@@ -70,7 +71,6 @@ class MapWidgetState extends State<MapWidget> {
     CameraPosition(target: LatLng(loc.lat, loc.lng));
     CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(
         CameraPosition(target: LatLng(loc.lat, loc.lng), zoom: 17.0));
-    print("Moving");
     _mapController.moveCamera(cameraUpdate);
     setState(() {
       _carparkList =
@@ -81,9 +81,11 @@ class MapWidgetState extends State<MapWidget> {
     });
   }
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) async {
     _mapController = controller;
     _mapController.setMapStyle(_mapStyle);
+    await Future.delayed(Duration(seconds: 1));
+    widget.loadedCallback();
   }
 
   Set<Marker> generateMarkers(List<Carpark> carparkList) {
@@ -133,16 +135,7 @@ class MapWidgetState extends State<MapWidget> {
         } else if (snapshot.hasError) {
           return Center(child: Text(snapshot.error.toString()));
         } else {
-          return Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.directions_car, color: Colors.blue, size: 140.0),
-                CircularProgressIndicator(),
-              ],
-            ),
-          );
+          return Container();
         }
       },
     );

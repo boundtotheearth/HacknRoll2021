@@ -35,6 +35,8 @@ class _MapScreenState extends State<MapScreen> {
   Carpark _selectedCarpark;
   GlobalKey<MapWidgetState> mapWidgetKey = GlobalKey();
   ModelLoader _modelLoader;
+  bool _loaded = false, _faded = false;
+
   void selectCarpark(Carpark carpark) {
     setState(() {
       _selectedCarpark = carpark;
@@ -66,6 +68,12 @@ class _MapScreenState extends State<MapScreen> {
       mapWidgetKey.currentState.moveToSearchLocation(place);
     };
 
+    void onLoad() {
+      setState(() {
+        _loaded = true;
+      });
+    }
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -74,6 +82,7 @@ class _MapScreenState extends State<MapScreen> {
             child: SlidingUpPanel(
               body: MapWidget(
                 selectCallback: selectCarpark,
+                loadedCallback: onLoad,
                 key: mapWidgetKey,
               ),
               controller: _pc,
@@ -94,6 +103,24 @@ class _MapScreenState extends State<MapScreen> {
           SearchBarWrapper(
             updateSearchLocationCallBack: updateSearchLocationCallBack,
           ),
+          if (!_faded)
+            AnimatedOpacity(
+              opacity: _loaded ? 0.0 : 1.0,
+              duration: Duration(milliseconds: 500),
+              onEnd: () {
+                setState(() {
+                  _faded = true;
+                });
+              },
+              child: Center(
+                child: Container(
+                  color: Color.fromRGBO(33, 52, 88, 1.0),
+                  child: Image(image: AssetImage('assets/images/splash.png')),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                ),
+              ),
+            ),
         ],
       ),
     );
